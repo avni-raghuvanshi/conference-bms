@@ -1,0 +1,181 @@
+.legend {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-neutral-700);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.required {
+    color: var(--color-error-500);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+@media (min-width: 480px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ─── Slot Button ─── */
+
+.slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    padding: var(--space-3) var(--space-2);
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border-dark);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+    position: relative;
+}
+
+.slot:hover:not(:disabled):not(.selected) {
+    border-color: var(--color-primary-400);
+    background-color: var(--color-primary-50);
+    transform: translateY(-1px);
+}
+
+.slot:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+.selected {
+    border-color: var(--color-primary-500);
+    background-color: var(--color-primary-600);
+    box-shadow: var(--shadow-primary-sm);
+    color: white;
+}
+
+.selected:hover {
+    background-color: var(--color-primary-700) !important;
+}
+
+.booked {
+    border-color: var(--color-neutral-200);
+    background-color: var(--color-neutral-50);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.time {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+}
+
+.separator {
+    font-size: var(--text-xs);
+    opacity: 0.7;
+}
+
+.bookedLabel {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
+}
+
+/* ─── Legend ─── */
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--font-normal);
+}
+
+.dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid transparent;
+}
+
+.dotAvailable {
+    background: var(--color-surface);
+    border-color: var(--color-border-dark);
+}
+
+.dotBooked {
+    background: var(--color-neutral-100);
+    border-color: var(--color-neutral-200);
+}
+
+.dotSelected {
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+/* ─── States ─── */
+
+.center {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-6) 0;
+    color: var(--color-text-muted);
+}
+
+.loadingText {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-10) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+    background: var(--color-neutral-50);
+    border-radius: var(--radius-xl);
+    border: 1px dashed var(--color-border-dark);
+}
+
+.placeholderIcon {
+    font-size: var(--text-3xl);
+}
+
+.allBooked {
+    font-size: var(--text-sm);
+    color: var(--color-warning-600);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-warning-50);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-3);
+}
+
+.error {
+    font-size: var(--text-xs);
+    color: var(--color-error-600);
+    font-weight: var(--font-medium);
+    margin-top: var(--space-1);
+}
