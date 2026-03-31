@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import styles from './page.module.css';
+import Image from 'next/image';
+import Button from '@/components/ui/Button';
+import Container from '@/components/container/Container';
 
 export const metadata: Metadata = {
     title: 'Conference BMS — Book Smarter, Meet Better',
@@ -54,134 +57,34 @@ const FEATURES = [
 
 export default function HomePage() {
     return (
-        <div className={styles.page}>
-            {/* ─── Header ─── */}
-            <header className={styles.header}>
-                <div className={`container ${styles.headerInner}`}>
-                    <Link href="/" className={styles.logo} aria-label="Conference BMS Home">
-                        <span className={styles.logoIcon} aria-hidden="true">🏛</span>
-                        <span className={styles.logoText}>
-                            Conf<span>BMS</span>
-                        </span>
-                    </Link>
-                    <nav className={styles.nav} aria-label="Main navigation">
-                        <Link href="/booking" className={styles.navLink}>
-                            Book a Room
-                        </Link>
-                    </nav>
-                </div>
-            </header>
-
-            {/* ─── Hero ─── */}
+        <div className={styles.mainLayout}>
             <main>
-                <section className={styles.hero} aria-labelledby="hero-title">
-                    <div className={styles.heroBg} aria-hidden="true">
-                        <div className={`${styles.orb} ${styles.orb1}`} />
-                        <div className={`${styles.orb} ${styles.orb2}`} />
-                    </div>
-
-                    <div className="container">
-                        <div className={styles.heroContent}>
-                            <div className={styles.badge} role="status">
-                                <span className={styles.badgeDot} aria-hidden="true" />
-                                Rooms Available Now
-                            </div>
-
-                            <h1 id="hero-title" className={styles.heroTitle}>
-                                Book Smarter,<br />
-                                Meet <em>Better</em>
-                            </h1>
-
-                            <p className={styles.heroSubtitle}>
-                                Reserve the perfect conference room in seconds. Real-time
-                                availability, seamless scheduling, zero friction.
-                            </p>
-
-                            <div className={styles.heroCta}>
-                                <Link href="/booking" className={styles.ctaBtnPrimary}>
-                                    Book a Room Now →
-                                </Link>
-                                <p className={styles.ctaTrust}>No account required · Free to use</p>
-                            </div>
-
-                            <div className={styles.heroStats} aria-label="Key statistics">
-                                <div className={styles.stat}>
-                                    <span className={styles.statValue}>4</span>
-                                    <span className={styles.statLabel}>Rooms</span>
-                                </div>
-                                <div className={styles.stat}>
-                                    <span className={styles.statValue}>10</span>
-                                    <span className={styles.statLabel}>Time Slots</span>
-                                </div>
-                                <div className={styles.stat}>
-                                    <span className={styles.statValue}>&lt;1 min</span>
-                                    <span className={styles.statLabel}>To Book</span>
+                <section className={styles.heroSection}>
+                    <Image
+                        src="https://res.cloudinary.com/doggeavv4/image/upload/v1774977603/hero_image_hskvjv.webp?w=1280"
+                        alt="Hero Image"
+                        fill
+                        priority
+                        className={styles.heroImage}
+                    />
+                    <div className={styles.heroContent}>
+                        <Container>
+                            <div className={styles.innerContent}>
+                                <h1>Where Cases are Won & <i>Precedents</i> are Set</h1>
+                                <p>Strategically positioned within reach of the Supreme Court and Delhi High Court. Our executive suites are designed to provide the perfect blend of comfort, convenience, and professionalism for legal minds who demand the best.</p>
+                                <div className={styles.ctaContainer}>
+                                    <Button>
+                                        Find Your Space
+                                    </Button>
+                                    <Button variant="secondary">
+                                        Virtual Tour
+                                    </Button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* ─── Features ─── */}
-                <section className={styles.featuresSection} aria-labelledby="features-title">
-                    <div className="container">
-                        <div className={styles.sectionHeader}>
-                            <span className={styles.sectionKicker}>Why Conference BMS</span>
-                            <h2 id="features-title" className={styles.sectionTitle}>
-                                Everything you need to<br />run great meetings
-                            </h2>
-                            <p className={styles.sectionDesc}>
-                                Designed around the way teams actually work — fast, flexible, and frustration-free.
-                            </p>
-                        </div>
-
-                        <div className={styles.featuresGrid}>
-                            {FEATURES.map(({ icon, color, title, desc }) => (
-                                <article key={title} className={styles.featureCard}>
-                                    <div className={`${styles.featureIcon} ${styles[color]}`} aria-hidden="true">
-                                        {icon}
-                                    </div>
-                                    <h3 className={styles.featureTitle}>{title}</h3>
-                                    <p className={styles.featureDesc}>{desc}</p>
-                                </article>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* ─── CTA Banner ─── */}
-                <section className={styles.ctaBanner} aria-labelledby="cta-title">
-                    <div className="container">
-                        <div className={styles.ctaBannerInner}>
-                            <h2 id="cta-title" className={styles.ctaTitle}>
-                                Ready to reclaim your time?
-                            </h2>
-                            <p className={styles.ctaDesc}>
-                                Your next great meeting is one click away.
-                            </p>
-                            <Link href="/booking" className={styles.ctaBtnSecondary}>
-                                Reserve Your Room
-                            </Link>
-                        </div>
+                        </Container>
                     </div>
                 </section>
             </main>
-
-            {/* ─── Footer ─── */}
-            <footer className={styles.footer}>
-                <div className="container">
-                    <div className={styles.footerInner}>
-                        <p className={styles.footerLogo}>Conference BMS</p>
-                        <nav className={styles.footerLinks} aria-label="Footer navigation">
-                            <Link href="/" className={styles.footerLink}>Home</Link>
-                            <Link href="/booking" className={styles.footerLink}>Book a Room</Link>
-                        </nav>
-                        <p className={styles.footerCopy}>
-                            © {new Date().getFullYear()} Conference BMS. All rights reserved.
-                        </p>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 }

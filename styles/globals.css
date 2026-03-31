@@ -22,8 +22,8 @@ body {
     font-family: var(--font-sans);
     font-size: var(--text-base);
     line-height: var(--leading-normal);
-    color: var(--color-text);
-    background-color: var(--color-bg);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -38,7 +38,7 @@ h5,
 h6 {
     font-family: var(--font-serif);
     line-height: var(--leading-tight);
-    color: var(--color-text);
+    color: var(--text-primary);
     font-weight: var(--font-bold);
 }
 
@@ -47,13 +47,13 @@ p {
 }
 
 a {
-    color: var(--color-primary-600);
+    color: var(--accent-primary);
     text-decoration: none;
     transition: color var(--transition-fast);
 }
 
 a:hover {
-    color: var(--color-primary-700);
+    color: var(--accent-hover);
     text-decoration: underline;
 }
 
@@ -93,7 +93,7 @@ ol {
 /* ─── Focus ─── */
 
 :focus-visible {
-    outline: 2px solid var(--color-primary-500);
+    outline: 2px solid var(--accent-hover);
     outline-offset: 3px;
     border-radius: var(--radius-sm);
 }
@@ -101,8 +101,8 @@ ol {
 /* ─── Selection ─── */
 
 ::selection {
-    background-color: var(--color-primary-200);
-    color: var(--color-primary-900);
+    background-color: var(--color-white);
+    color: var(--color-charcoal);
 }
 
 /* ─── Scrollbar ─── */

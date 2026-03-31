@@ -3,6 +3,54 @@
    ============================================ */
 
 :root {
+    /* neutrals */
+    --color-black: #0b0b0c;
+    --color-charcoal: #111214;
+    --color-gray-900: #1a1c1f;
+    --color-gray-700: #2a2d31;
+    --color-gray-500: #6b6f76;
+    --color-gray-300: #c9ccd1;
+    --color-white: #ffffff;
+
+    /* accent (luxury gold) */
+    --color-gold-500: #c8a96a;
+    --color-gold-400: #d6b87c;
+    --color-gold-dark: #412D00;
+
+    /* states */
+    --color-success: #3ba776;
+    --color-error: #d9534f;
+    --color-error-hover: #d9534f;
+
+    /* surfaces */
+    --bg-primary: var(--color-black);
+    --bg-secondary: var(--color-charcoal);
+    --bg-elevated: var(--color-gray-900);
+
+    /* text */
+    --text-primary: var(--color-white);
+    --text-secondary: var(--color-gray-300);
+    --text-muted: var(--color-gray-500);
+    --text-on-accent: var(--color-gold-dark);
+
+    /* borders */
+    --border-subtle: var(--color-gray-700);
+
+    /* accent */
+    --accent-primary: var(--color-gold-500);
+    --accent-hover: var(--color-gold-400);
+
+    /* interactive */
+    --button-primary-bg: var(--accent-primary);
+    --button-primary-text: #000;
+
+    /* states */
+    --state-success: var(--color-success);
+    --state-error: var(--color-error);
+    --state-error-hover: var(--color-error-hover);
+
+    /* -------------------------------------------------------- */
+
     /* ─── Color Palette ─── */
     --color-primary-50: #eef2ff;
     --color-primary-100: #e0e7ff;
@@ -114,7 +162,10 @@
     /* 48px */
     --text-6xl: 3.75rem;
     /* 60px */
+    --text-7xl: 4.5rem;
+    /* 72px */
 
+    --leading-tightest: 1.1;
     --leading-tight: 1.25;
     --leading-snug: 1.375;
     --leading-normal: 1.5;
