@@ -1,8 +1,6 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import Link from 'next/link';
+import { prisma } from '@/lib/db';
 import styles from './page.module.css';
 
 function formatDate(dateStr: string): string {
@@ -28,141 +26,181 @@ function formatTime(time: string): string {
     return `${display}:${String(min).padStart(2, '0')} ${suffix}`;
 }
 
-function ConfirmationContent() {
-    const searchParams = useSearchParams();
+interface ConfirmationPageProps {
+    searchParams: { bookingId?: string };
+}
 
-    const status = searchParams.get('status') ?? '';
-    const bookingId = searchParams.get('bookingId') ?? '';
-    const room = searchParams.get('room') ?? '';
-    const date = searchParams.get('date') ?? '';
-    const start = searchParams.get('start') ?? '';
-    const end = searchParams.get('end') ?? '';
-    const title = searchParams.get('title') ?? '';
-    const email = searchParams.get('email') ?? '';
+async function ConfirmationContent({ bookingId }: { bookingId: string | undefined }) {
+    if (!bookingId) {
+        return <ErrorState message="No booking reference provided." />;
+    }
 
-    const isSuccess = status === 'success';
+    const booking = await prisma.booking.findUnique({ where: { id: bookingId } });
+
+    if (!booking || booking.status !== 'CONFIRMED') {
+        return <ErrorState message="Booking not found or was cancelled." />;
+    }
+
+    const room = await prisma.room.findUnique({ where: { id: booking.roomId }, select: { name: true } });
+    const roomName = room?.name ?? booking.roomId;
 
     return (
         <main className={styles.main}>
-            {/* ─── Status Card ─── */}
-            <div className={[styles.card, isSuccess ? styles.cardSuccess : styles.cardError].join(' ')}>
-                <div className={styles.iconWrapper} aria-hidden="true">
-                    <span className={styles.icon}>{isSuccess ? '✓' : '✕'}</span>
-                </div>
+            {/* ── Two-column: Identity + Session ── */}
+            <div className={styles.grid}>
 
-                <div className={styles.statusText}>
-                    <h1 className={styles.title}>
-                        {isSuccess ? 'Booking Confirmed!' : 'Booking Failed'}
-                    </h1>
-                    <p className={styles.subtitle}>
-                        {isSuccess
-                            ? 'Your conference room has been successfully reserved.'
-                            : 'We couldn\'t complete your booking. Please try again.'}
-                    </p>
-                </div>
-
-                {isSuccess && bookingId && (
-                    <div className={styles.bookingId}>
-                        <span className={styles.bookingIdLabel}>Booking ID</span>
-                        <code className={styles.bookingIdValue}>{bookingId}</code>
+                {/* Left: Identity status */}
+                <section className={styles.identity} aria-labelledby="identity-title">
+                    <div className={styles.identityHeading}>
+                        <span className={styles.kicker}>Secure Onboarding</span>
+                        <h1 className={styles.title} id="identity-title">
+                            Identity<br /><em className={styles.titleAccent}>Verified.</em>
+                        </h1>
                     </div>
-                )}
-            </div>
 
-            {/* ─── Booking Summary ─── */}
-            {isSuccess && (room || date || title) && (
-                <section className={styles.summary} aria-labelledby="summary-title">
-                    <h2 id="summary-title" className={styles.summaryTitle}>
-                        Booking Summary
-                    </h2>
+                    <div className={styles.statusCard}>
+                        <div className={[styles.iconWrap, styles.iconWrapSuccess].join(' ')} aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                                <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+                            </svg>
+                        </div>
 
-                    <dl className={styles.details}>
-                        {title && (
-                            <>
-                                <dt className={styles.detailLabel}>Meeting</dt>
-                                <dd className={styles.detailValue}>{title}</dd>
-                            </>
-                        )}
-                        {room && (
-                            <>
-                                <dt className={styles.detailLabel}>Room</dt>
-                                <dd className={styles.detailValue}>{room}</dd>
-                            </>
-                        )}
-                        {date && (
-                            <>
-                                <dt className={styles.detailLabel}>Date</dt>
-                                <dd className={styles.detailValue}>{formatDate(date)}</dd>
-                            </>
-                        )}
-                        {(start || end) && (
-                            <>
-                                <dt className={styles.detailLabel}>Time</dt>
-                                <dd className={styles.detailValue}>
-                                    {formatTime(start)} – {formatTime(end)}
-                                </dd>
-                            </>
-                        )}
-                        {email && (
-                            <>
-                                <dt className={styles.detailLabel}>Organizer</dt>
-                                <dd className={styles.detailValue}>{email}</dd>
-                            </>
-                        )}
-                    </dl>
-
-                    <div className={styles.saveHint}>
-                        <span className={styles.saveHintIcon} aria-hidden="true">💡</span>
-                        <p>Save your Booking ID <strong>{bookingId}</strong> for your records.</p>
+                        <div className={styles.statusBody}>
+                            <p className={styles.statusText}>
+                                Your reservation has been successfully confirmed. You are now authorised to access the selected space at the scheduled time.
+                            </p>
+                            <div className={styles.encryptedBadge}>
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12" aria-hidden="true">
+                                    <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
+                                </svg>
+                                <span>Encrypted Session Active</span>
+                            </div>
+                        </div>
                     </div>
                 </section>
-            )}
 
-            {/* ─── Actions ─── */}
-            <div className={styles.actions}>
-                {isSuccess ? (
-                    <>
-                        <Link href="/" className={styles.actionLinkGhost}>
-                            Return to Home
-                        </Link>
-                        <Link href="/booking" className={styles.actionLinkPrimary}>
-                            Book Another Room
-                        </Link>
-                    </>
-                ) : (
-                    <>
-                        <Link href="/" className={styles.actionLinkGhost}>
-                            Back to Home
-                        </Link>
-                        <Link href="/booking" className={styles.actionLinkPrimary}>
-                            Try Again
-                        </Link>
-                    </>
-                )}
+                {/* Right: Session card */}
+                <section className={styles.sessionCard} aria-label="Booking session details">
+                    <div className={styles.sessionInner}>
+                        <p className={styles.sessionKicker}>Session Active</p>
+                        <p className={styles.confeRra}>CONFERRA</p>
+
+                        <p className={styles.accessLabel}>ACCESS GRANTED — SCHEDULE TOKEN</p>
+                        <p className={styles.bookingRef} aria-label={`Booking reference ${booking.id}`}>
+                            {booking.id}
+                        </p>
+
+                        <div className={styles.sessionDivider} aria-hidden="true" />
+
+                        <dl className={styles.sessionDetails}>
+                            <div className={styles.sessionRow}>
+                                <dt className={styles.sessionKey}>Space</dt>
+                                <dd className={styles.sessionVal}>{roomName}</dd>
+                            </div>
+                            <div className={styles.sessionRow}>
+                                <dt className={styles.sessionKey}>Access Window</dt>
+                                <dd className={styles.sessionVal}>
+                                    {formatTime(booking.startTime)} — {formatTime(booking.endTime)}
+                                </dd>
+                            </div>
+                            <div className={styles.sessionRow}>
+                                <dt className={styles.sessionKey}>Date</dt>
+                                <dd className={styles.sessionVal}>{formatDate(booking.date)}</dd>
+                            </div>
+                            <div className={styles.sessionRow}>
+                                <dt className={styles.sessionKey}>Concierge</dt>
+                                <dd className={styles.sessionVal}>{booking.organizerEmail}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </section>
             </div>
+
+            {/* ── Bottom bar ── */}
+            <section className={styles.confirmed} aria-labelledby="confirmed-title">
+                <div className={styles.confirmedLeft}>
+                    <div className={styles.confirmedDivider} aria-hidden="true" />
+                    <div>
+                        <p className={styles.confirmedKicker} id="confirmed-title">Reservation</p>
+                        <p className={styles.confirmedRef}>{booking.id}</p>
+                        <div className={styles.confirmedMeta}>
+                            <p className={styles.confirmedMetaItem}>{booking.title}</p>
+                            <p className={styles.confirmedMetaItem}>{roomName}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.confirmedRight}>
+                    <div className={[styles.accessBadge, styles.accessBadgeSuccess].join(' ')}>
+                        ACCESS GRANTED
+                    </div>
+                    <div className={styles.actions}>
+                        <Link href="/" className={styles.actionGhost}>Return to Home</Link>
+                        <Link href="/booking" className={styles.actionPrimary}>Book Another Room</Link>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }
 
-export default function ConfirmationPage() {
+function ErrorState({ message }: { message: string }) {
+    return (
+        <main className={styles.main}>
+            <div className={styles.grid}>
+                <section className={styles.identity} aria-labelledby="identity-title">
+                    <div className={styles.identityHeading}>
+                        <span className={styles.kicker}>Booking Error</span>
+                        <h1 className={styles.title} id="identity-title">
+                            Booking<br /><em className={styles.titleErrorAccent}>Failed.</em>
+                        </h1>
+                    </div>
+                    <div className={styles.statusCard}>
+                        <div className={[styles.iconWrap, styles.iconWrapError].join(' ')} aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                                <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                        <div className={styles.statusBody}>
+                            <p className={styles.statusText}>{message}</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section className={styles.sessionCard} aria-label="Session status">
+                    <div className={styles.sessionInner}>
+                        <p className={styles.sessionKicker}>Session Terminated</p>
+                        <p className={styles.confeRra}>CONFERRA</p>
+                        <p className={styles.accessLabel}>RESERVATION REQUEST</p>
+                        <p className={styles.bookingRef}>—</p>
+                    </div>
+                </section>
+            </div>
+
+            <section className={styles.confirmed}>
+                <div className={styles.confirmedRight} style={{ marginInlineStart: 'auto' }}>
+                    <div className={[styles.accessBadge, styles.accessBadgeError].join(' ')}>
+                        ACCESS DENIED
+                    </div>
+                    <div className={styles.actions}>
+                        <Link href="/" className={styles.actionGhost}>Return to Home</Link>
+                        <Link href="/booking" className={styles.actionPrimary}>Try Again</Link>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+}
+
+export default function ConfirmationPage({ searchParams }: ConfirmationPageProps) {
     return (
         <div className={styles.page}>
-            {/* ─── Header ─── */}
-            <header className={styles.header}>
-                <div className={`container ${styles.headerInner}`}>
-                    <Link href="/" className={styles.logo} aria-label="Back to home">
-                        <span className={styles.logoIcon} aria-hidden="true">🏛</span>
-                        <span className={styles.logoText}>ConfBMS</span>
-                    </Link>
-                </div>
-            </header>
-
             <Suspense fallback={
                 <div className={styles.loadingFallback} aria-live="polite">
                     Loading confirmation…
                 </div>
             }>
-                <ConfirmationContent />
+                <ConfirmationContent bookingId={searchParams.bookingId} />
             </Suspense>
         </div>
     );

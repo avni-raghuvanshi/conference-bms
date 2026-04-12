@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  firstBookedAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+}
+
+model OtpVerification {
+  id        String    @id @default(cuid())
+  email     String
+  otpHash   String
+  expiresAt DateTime
+  usedAt    DateTime?
+  attempts  Int       @default(0)  // failed guess counter
+  createdAt DateTime  @default(now())
+
+  @@index([email])
+  @@index([expiresAt])  // supports periodic cleanup: DELETE WHERE expiresAt < now
+}
+
+model Room {
+  id          String   @id
+  name        String
+  slug        String   @unique
+  capacity    Int
+  floor       Int
+  amenities   String[]
+  imageUrl    String
+  description String
+  createdAt   DateTime @default(now())
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  roomId          String
+  date            String        // "YYYY-MM-DD"
+  startTime       String        // "HH:MM"
+  endTime         String        // "HH:MM"
+  title           String
+  organizerEmail  String
+  attendees       String[]
+  calendarEventId String?
+  meetLink        String?
+  status          BookingStatus @default(CONFIRMED)
+  createdAt       DateTime      @default(now())
+
+  // Prevents double-booking at the database level
+  @@unique([roomId, date, startTime])
+  @@index([organizerEmail])
+  @@index([roomId, date])
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}

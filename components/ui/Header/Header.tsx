@@ -1,24 +1,34 @@
 import React from 'react';
-import styles from './Header.module.css';
-import Container from '@/components/container/Container';
 import Link from 'next/link';
-import Button from '../Button';
+import styles from './Header.module.css';
+
+const NAV_LINKS = [
+    { label: 'SPACES', href: '/#spaces' },
+    { label: 'FEATURES', href: '/#features' },
+    { label: 'PRICING', href: '/#pricing' },
+    { label: 'CONTACT', href: '/#contact' },
+];
 
 const Header = () => {
     return (
-        <header className={styles.header}>
-            <Container>
-                <div className={styles.headerInner}>
-                    <Link href="/" className={styles.logo} aria-label="Anandvan">
-                        <span className={styles.logoText}>
-                            Anandvan
-                        </span>
-                    </Link>
-                    <Button size="sm">Book Us Now</Button>
-                </div>
-            </Container>
-        </header>
-    )
-}
+        <header className={styles.header} role="banner">
+            <Link href="/" className={styles.logo} aria-label="CONFERRA — Return to home">
+                CONFERRA
+            </Link>
 
-export default Header
+            <nav className={styles.nav} aria-label="Primary navigation">
+                {NAV_LINKS.map(({ label, href }) => (
+                    <Link key={label} href={href} className={styles.navLink}>
+                        {label}
+                    </Link>
+                ))}
+            </nav>
+
+            <Link href="/booking" className={styles.bookButton}>
+                BOOK NOW
+            </Link>
+        </header>
+    );
+};
+
+export default Header;

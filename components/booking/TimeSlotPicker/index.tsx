@@ -33,8 +33,7 @@ export default function TimeSlotPicker({
     if (!roomId || !date) {
         return (
             <div className={styles.placeholder}>
-                <span className={styles.placeholderIcon} aria-hidden="true">🕐</span>
-                <p>Select a room and date to see available time slots.</p>
+                <p>Select a room and date to view availability.</p>
             </div>
         );
     }
@@ -43,7 +42,7 @@ export default function TimeSlotPicker({
         return (
             <div className={styles.center}>
                 <LoadingSpinner size="md" label="Loading time slots…" />
-                <p className={styles.loadingText}>Loading available slots…</p>
+                <p className={styles.loadingText}>Loading availability…</p>
             </div>
         );
     }
@@ -70,11 +69,6 @@ export default function TimeSlotPicker({
 
     return (
         <div>
-            <p className={styles.legend}>
-                Time Slot{' '}
-                <span className={styles.required} aria-hidden="true">*</span>
-            </p>
-
             {allBooked && (
                 <p className={styles.allBooked}>
                     All slots are booked for this day. Please choose a different date.
@@ -82,61 +76,41 @@ export default function TimeSlotPicker({
             )}
 
             <div
-                className={styles.grid}
+                className={styles.list}
                 role="radiogroup"
                 aria-label="Available time slots"
             >
-                {slots.map((slot) => (
-                    <button
-                        key={slot.id}
-                        type="button"
-                        role="radio"
-                        aria-checked={slot.id === selectedSlotId}
-                        disabled={!slot.available}
-                        onClick={() => slot.available && onSelect(slot)}
-                        className={[
-                            styles.slot,
-                            !slot.available ? styles.booked : '',
-                            slot.id === selectedSlotId ? styles.selected : '',
-                        ]
-                            .filter(Boolean)
-                            .join(' ')}
-                        aria-label={`${formatTime(slot.startTime)} to ${formatTime(slot.endTime)}${!slot.available ? ' – unavailable' : ''}`}
-                    >
-                        <span className={styles.time}>
-                            {formatTime(slot.startTime)}
-                        </span>
-                        <span className={styles.separator}>&ndash;</span>
-                        <span className={styles.time}>
-                            {formatTime(slot.endTime)}
-                        </span>
-                        {!slot.available && (
-                            <span className={styles.bookedLabel}>Booked</span>
-                        )}
-                    </button>
-                ))}
+                {slots.map((slot) => {
+                    const isSelected = slot.id === selectedSlotId;
+                    return (
+                        <button
+                            key={slot.id}
+                            type="button"
+                            role="radio"
+                            aria-checked={isSelected}
+                            disabled={!slot.available}
+                            onClick={() => slot.available && onSelect(slot)}
+                            className={[
+                                styles.slot,
+                                !slot.available && styles.slotBooked,
+                                isSelected && styles.slotSelected,
+                            ].filter(Boolean).join(' ')}
+                            aria-label={`${formatTime(slot.startTime)} to ${formatTime(slot.endTime)}${!slot.available ? ' – unavailable' : ''}`}
+                        >
+                            <span className={styles.slotTime}>
+                                {formatTime(slot.startTime)} — {formatTime(slot.endTime)}
+                            </span>
+                            <span className={styles.slotStatus}>
+                                {isSelected ? 'Selected' : slot.available ? 'Available' : 'Reserved'}
+                            </span>
+                        </button>
+                    );
+                })}
             </div>
 
             {error && (
-                <p className={styles.error} role="alert">
-                    {error}
-                </p>
+                <p className={styles.error} role="alert">{error}</p>
             )}
-
-            <div className={styles.legend} aria-hidden="true">
-                <span className={styles.legendItem}>
-                    <span className={[styles.dot, styles.dotAvailable].join(' ')} />
-                    Available
-                </span>
-                <span className={styles.legendItem}>
-                    <span className={[styles.dot, styles.dotBooked].join(' ')} />
-                    Booked
-                </span>
-                <span className={styles.legendItem}>
-                    <span className={[styles.dot, styles.dotSelected].join(' ')} />
-                    Selected
-                </span>
-            </div>
         </div>
     );
 }

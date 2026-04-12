@@ -11,17 +11,17 @@ export interface Room {
 
 export interface TimeSlot {
     id: string;
-    startTime: string; // "09:00"
-    endTime: string;   // "10:00"
+    startTime: string; // "HH:MM"
+    endTime: string;   // "HH:MM"
     available: boolean;
 }
 
 export interface BookingPayload {
     roomId: string;
-    date: string;         // ISO date "YYYY-MM-DD"
+    date: string;           // "YYYY-MM-DD"
     slotId: string;
-    startTime: string;
-    endTime: string;
+    startTime: string;      // "HH:MM"
+    endTime: string;        // "HH:MM"
     title: string;
     organizerEmail: string;
     attendees: string[];
@@ -31,14 +31,20 @@ export interface BookingResult {
     success: boolean;
     bookingId?: string;
     message?: string;
-    booking?: {
-        id: string;
-        roomName: string;
-        date: string;
-        startTime: string;
-        endTime: string;
-        title: string;
-        organizerEmail: string;
-        attendees: string[];
-    };
+    requiresOtp?: boolean;
+    booking?: ApiBooking;
+}
+
+export interface ApiBooking {
+    id: string;
+    roomName: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+    title: string;
+    organizerEmail: string;
+    attendees: string[];
+    status?: string;
+    calendarEventId?: string;
+    createdAt?: string;
 }

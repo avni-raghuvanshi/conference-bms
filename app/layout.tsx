@@ -1,51 +1,44 @@
 import type { Metadata } from 'next';
+import { Noto_Serif, Montserrat } from 'next/font/google';
 import '../styles/globals.css';
 import Header from '@/components/ui/Header/Header';
 
-export const viewport = {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-};
+const notoSerif = Noto_Serif({
+    subsets: ['latin'],
+    weight: ['400', '700'],
+    style: ['normal', 'italic'],
+    variable: '--ff-serif',
+    display: 'swap',
+});
+
+const montserrat = Montserrat({
+    subsets: ['latin'],
+    weight: ['200', '300', '400', '500', '600', '700', '800'],
+    variable: '--ff-sans',
+    display: 'swap',
+});
 
 export const metadata: Metadata = {
     title: {
-        default: 'Conference BMS — Room Booking',
-        template: '%s | Conference BMS',
+        default: 'CONFERRA — Architectural Sanctuaries for Dialogue',
+        template: '%s | CONFERRA',
     },
     description:
-        'Book conference rooms in seconds. Choose a room, pick a time, invite your team.',
-    keywords: ['conference room booking', 'meeting room', 'office booking system'],
+        'Elevated meeting spaces in the heart of Greater Kailash. Designed for focus, engineered for collaboration, curated for the modern visionary.',
+    keywords: ['conference room', 'meeting space', 'Greater Kailash', 'executive suite', 'Delhi'],
     openGraph: {
         type: 'website',
-        locale: 'en_US',
-        siteName: 'Conference BMS',
-        title: 'Conference BMS — Room Booking',
+        locale: 'en_IN',
+        siteName: 'CONFERRA',
+        title: 'CONFERRA — Architectural Sanctuaries for Dialogue',
         description:
-            'Book conference rooms in seconds. Choose a room, pick a time, invite your team.',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Conference BMS',
-        description: 'Book conference rooms in seconds.',
+            'Elevated meeting spaces in the heart of Greater Kailash. Designed for focus, engineered for collaboration.',
     },
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en">
-            <head>
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
-                    rel="stylesheet"
-                />
-            </head>
+        <html lang="en" className={`${notoSerif.variable} ${montserrat.variable}`}>
             <body>
                 <Header />
                 {children}

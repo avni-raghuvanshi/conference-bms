@@ -1,77 +1,154 @@
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
+.calendar {
+    background: var(--color-surface-container-low);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
 }
 
-.label {
-    font-size: var(--text-sm);
-    font-weight: var(--font-semibold);
-    color: var(--color-neutral-700);
-}
-
-.required {
-    color: var(--color-error-500);
-}
-
-.input {
-    width: 100%;
-    height: 2.75rem;
-    padding: var(--space-3) var(--space-4);
-    font-size: var(--text-base);
-    font-family: var(--font-sans);
-    color: var(--color-text);
-    background-color: var(--color-surface);
-    border: 1.5px solid var(--color-border-dark);
-    border-radius: var(--radius-lg);
-    outline: none;
-    transition:
-        border-color var(--transition-fast),
-        box-shadow var(--transition-fast);
-    cursor: pointer;
-}
-
-.input::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity var(--transition-fast);
-}
-
-.input::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-}
-
-.input:hover:not(:disabled) {
-    border-color: var(--color-neutral-400);
-}
-
-.input:focus {
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.15);
-}
-
-.input:disabled {
+.calendarDisabled {
     opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ── Header ── */
+
+.calHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+}
+
+.calMonth {
+    font-family: var(--font-serif);
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-on-surface);
+}
+
+.calNav {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.navBtn {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-lg);
+    color: var(--color-on-surface-variant);
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    background: transparent;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+    line-height: 1;
+}
+
+.navBtn:hover:not(:disabled) {
+    border-color: hsl(168 20% 72% / 0.5);
+    color: var(--color-primary);
+}
+
+.navBtn:disabled {
+    opacity: 0.25;
     cursor: not-allowed;
-    background-color: var(--color-neutral-100);
 }
 
-.inputError {
-    border-color: var(--color-error-500);
+/* ── Weekday labels ── */
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: var(--space-3);
 }
 
-.inputError:focus {
-    box-shadow: 0 0 0 3px rgb(239 68 68 / 0.15);
+.weekday {
+    font-family: var(--font-sans);
+    font-size: 0.5625rem;
+    font-weight: var(--font-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    padding-block: var(--space-2);
 }
+
+/* ── Calendar grid ── */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap-y: var(--space-1);
+}
+
+.empty {
+    height: 2.5rem;
+}
+
+.day {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-on-surface);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    border-radius: 0;
+}
+
+.day:hover:not(.dayDisabled) {
+    color: var(--color-primary);
+}
+
+.daySelected {
+    background: var(--color-primary);
+    color: var(--color-on-primary) !important;
+    font-weight: var(--font-bold);
+}
+
+.daySelected:hover {
+    background: var(--color-primary-fixed-dim);
+    color: var(--color-on-primary) !important;
+}
+
+.dayToday {
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+}
+
+.dayDisabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.dayFullyBooked {
+    opacity: 0.35;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    color: var(--color-error);
+}
+
+/* ── States ── */
 
 .error {
+    font-family: var(--font-sans);
     font-size: var(--text-xs);
-    color: var(--color-error-600);
+    color: var(--color-error);
     font-weight: var(--font-medium);
+    margin-block-start: var(--space-4);
 }
 
 .hint {
+    font-family: var(--font-sans);
     font-size: var(--text-xs);
-    color: var(--color-text-muted);
+    color: var(--color-on-surface-variant);
     font-style: italic;
+    margin-block-start: var(--space-4);
 }

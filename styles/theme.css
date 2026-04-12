@@ -1,222 +1,186 @@
 /* ============================================
-   theme.css — CSS Design Tokens
+   theme.css — Conferra Design Tokens
    ============================================ */
 
 :root {
-    /* neutrals */
-    --color-black: #0b0b0c;
-    --color-charcoal: #111214;
-    --color-gray-900: #1a1c1f;
-    --color-gray-700: #2a2d31;
-    --color-gray-500: #6b6f76;
-    --color-gray-300: #c9ccd1;
-    --color-white: #ffffff;
+    /* ── Conferra Color Palette ── */
+    --color-primary: #c8c8b0;
+    --color-primary-dim: #babaa3;
+    --color-primary-fixed: #e4e4cc;
+    --color-primary-fixed-dim: #d6d6be;
+    --color-on-primary: #404130;
+    --color-on-primary-fixed: #3f412f;
+    --color-primary-container: #474836;
+    --color-on-primary-container: #d1d2ba;
 
-    /* accent (luxury gold) */
-    --color-gold-500: #c8a96a;
-    --color-gold-400: #d6b87c;
-    --color-gold-dark: #412D00;
+    --color-secondary: #9f9f90;
+    --color-secondary-container: #3b3c31;
+    --color-on-secondary: #202117;
+    --color-on-secondary-container: #c0c0b1;
 
-    /* states */
-    --color-success: #3ba776;
-    --color-error: #d9534f;
-    --color-error-hover: #d9534f;
+    --color-surface: #0e0e0e;
+    --color-surface-bright: #2b2c2c;
+    --color-surface-container-lowest: #000000;
+    --color-surface-container-low: #131313;
+    --color-surface-container: #191a1a;
+    --color-surface-container-high: #1f2020;
+    --color-surface-container-highest: #252626;
 
-    /* surfaces */
-    --bg-primary: var(--color-black);
-    --bg-secondary: var(--color-charcoal);
-    --bg-elevated: var(--color-gray-900);
+    --color-background: #0e0e0e;
+    --color-on-background: #e7e5e5;
+    --color-on-surface: #e7e5e5;
+    --color-on-surface-variant: #acabaa;
 
-    /* text */
-    --text-primary: var(--color-white);
-    --text-secondary: var(--color-gray-300);
-    --text-muted: var(--color-gray-500);
-    --text-on-accent: var(--color-gold-dark);
+    --color-outline: #767575;
+    --color-outline-variant: #484848;
 
-    /* borders */
-    --border-subtle: var(--color-gray-700);
+    --color-error: #ed7f64;
+    --color-error-container: #7e2b17;
+    --color-on-error: #450900;
+    --color-on-error-container: #ff9b82;
 
-    /* accent */
-    --accent-primary: var(--color-gold-500);
-    --accent-hover: var(--color-gold-400);
-
-    /* interactive */
-    --button-primary-bg: var(--accent-primary);
-    --button-primary-text: #000;
-
-    /* states */
-    --state-success: var(--color-success);
-    --state-error: var(--color-error);
-    --state-error-hover: var(--color-error-hover);
-
-    /* -------------------------------------------------------- */
-
-    /* ─── Color Palette ─── */
-    --color-primary-50: #eef2ff;
-    --color-primary-100: #e0e7ff;
-    --color-primary-200: #c7d2fe;
-    --color-primary-300: #a5b4fc;
-    --color-primary-400: #818cf8;
-    --color-primary-500: #6366f1;
-    --color-primary-600: #4f46e5;
-    --color-primary-700: #4338ca;
-    --color-primary-800: #3730a3;
-    --color-primary-900: #312e81;
-
-    --color-accent-400: #f472b6;
-    --color-accent-500: #ec4899;
-    --color-accent-600: #db2777;
-
-    --color-success-50: #f0fdf4;
-    --color-success-200: #bbf7d0;
-    --color-success-500: #22c55e;
-    --color-success-600: #16a34a;
-    --color-success-700: #15803d;
-
-    --color-error-50: #fef2f2;
-    --color-error-200: #fecaca;
-    --color-error-500: #ef4444;
-    --color-error-600: #dc2626;
-    --color-error-700: #b91c1c;
-
-    --color-warning-50: #fffbeb;
-    --color-warning-500: #f59e0b;
-    --color-warning-600: #d97706;
-
-    --color-neutral-0: #ffffff;
-    --color-neutral-50: #f8fafc;
-    --color-neutral-100: #f1f5f9;
-    --color-neutral-200: #e2e8f0;
-    --color-neutral-300: #cbd5e1;
-    --color-neutral-400: #94a3b8;
-    --color-neutral-500: #64748b;
-    --color-neutral-600: #475569;
-    --color-neutral-700: #334155;
-    --color-neutral-800: #1e293b;
-    --color-neutral-900: #0f172a;
-    --color-neutral-950: #020617;
-
-    /* ─── Semantic Colors ─── */
-    --color-bg: var(--color-neutral-50);
-    --color-surface: var(--color-neutral-0);
-    --color-surface-2: var(--color-neutral-100);
-    --color-border: var(--color-neutral-200);
-    --color-border-dark: var(--color-neutral-300);
-    --color-text: var(--color-neutral-900);
-    --color-text-muted: var(--color-neutral-500);
-    --color-text-subtle: var(--color-neutral-400);
-    --color-text-on-primary: var(--color-neutral-0);
-
-    /* ─── Spacing Scale ─── */
-    --space-0: 0;
+    /* ── Spacing Scale ── */
     --space-1: 0.25rem;
-    /* 4px  */
     --space-2: 0.5rem;
-    /* 8px  */
     --space-3: 0.75rem;
-    /* 12px */
     --space-4: 1rem;
-    /* 16px */
     --space-5: 1.25rem;
-    /* 20px */
     --space-6: 1.5rem;
-    /* 24px */
     --space-8: 2rem;
-    /* 32px */
     --space-10: 2.5rem;
-    /* 40px */
     --space-12: 3rem;
-    /* 48px */
     --space-14: 3.5rem;
-    /* 56px */
     --space-16: 4rem;
-    /* 64px */
     --space-20: 5rem;
-    /* 80px */
     --space-24: 6rem;
-    /* 96px */
     --space-32: 8rem;
-    /* 128px */
+    --space-48: 12rem;
 
-    /* ─── Typography ─── */
-    --font-serif: 'Noto Serif', Georgia, serif;
-    --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+    /* ── Typography ── */
+    --font-serif: var(--ff-serif, 'Noto Serif', Georgia, serif);
+    --font-sans: var(--ff-sans, 'Montserrat', system-ui, -apple-system, sans-serif);
 
     --text-xs: 0.75rem;
-    /* 12px */
     --text-sm: 0.875rem;
-    /* 14px */
     --text-base: 1rem;
-    /* 16px */
     --text-lg: 1.125rem;
-    /* 18px */
     --text-xl: 1.25rem;
-    /* 20px */
     --text-2xl: 1.5rem;
-    /* 24px */
     --text-3xl: 1.875rem;
-    /* 30px */
     --text-4xl: 2.25rem;
-    /* 36px */
     --text-5xl: 3rem;
-    /* 48px */
     --text-6xl: 3.75rem;
-    /* 60px */
     --text-7xl: 4.5rem;
-    /* 72px */
+    --text-8xl: 6rem;
 
-    --leading-tightest: 1.1;
-    --leading-tight: 1.25;
+    --leading-tightest: 1.05;
+    --leading-tight: 1.2;
     --leading-snug: 1.375;
     --leading-normal: 1.5;
-    --leading-relaxed: 1.625;
-    --leading-loose: 2;
+    --leading-relaxed: 1.65;
 
+    --font-light: 300;
     --font-normal: 400;
     --font-medium: 500;
     --font-semibold: 600;
     --font-bold: 700;
     --font-extrabold: 800;
 
-    /* ─── Border Radius ─── */
-    --radius-sm: 0.25rem;
-    /* 4px  */
-    --radius-md: 0.5rem;
-    /* 8px  */
-    --radius-lg: 0.75rem;
-    /* 12px */
-    --radius-xl: 1rem;
-    /* 16px */
-    --radius-2xl: 1.5rem;
-    /* 24px */
+    /* ── Border Radius ── */
+    --radius-sm: 0.125rem;
+    --radius-md: 0.25rem;
+    --radius-lg: 0.5rem;
     --radius-full: 9999px;
 
-    /* ─── Shadows ─── */
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08);
-    --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+    /* ── Shadows ── */
+    --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.25);
+    --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 20px 40px hsl(0 0% 0% / 0.5);
 
-    --shadow-primary-sm: 0 2px 8px -2px rgb(99 102 241 / 0.35);
-    --shadow-primary-md: 0 4px 14px -2px rgb(99 102 241 / 0.4);
-
-    /* ─── Transitions ─── */
+    /* ── Transitions ── */
     --transition-fast: 150ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 300ms ease;
-    --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-base: 250ms ease;
+    --transition-slow: 500ms ease;
+    --transition-luxury: 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    /* ─── Z-index ─── */
+    /* ── Z-index ── */
     --z-base: 0;
     --z-raised: 10;
     --z-overlay: 100;
     --z-modal: 200;
-    --z-toast: 300;
 
-    /* ─── Layout ─── */
-    --container-max: 1200px;
-    --container-narrow: 720px;
-    --header-height: 4rem;
+    /* ── Layout ── */
+    --container-max: 1280px;
+    --header-height: 5rem;
+
+    /* ── Legacy Compatibility Aliases ──
+       Allows existing components to work with the new color system */
+    --accent-primary: var(--color-primary);
+    --accent-hover: var(--color-primary-fixed-dim);
+    --text-primary: var(--color-on-surface);
+    --text-secondary: var(--color-on-surface-variant);
+    --text-muted: var(--color-outline);
+    --text-on-accent: var(--color-on-primary);
+    --bg-primary: var(--color-background);
+    --bg-secondary: var(--color-surface-container-low);
+    --bg-elevated: var(--color-surface-container);
+    --border-subtle: var(--color-outline-variant);
+    --state-error: var(--color-error);
+    --state-error-hover: var(--color-error);
+    --shadow-primary-sm: 0 2px 8px hsl(0 0% 0% / 0.25);
+    --shadow-primary-md: 0 4px 16px hsl(0 0% 0% / 0.4);
+
+    /* Semantic aliases */
+    --color-border: var(--color-outline-variant);
+    --color-border-dark: var(--color-outline);
+    --color-text: var(--color-on-surface);
+    --color-text-muted: var(--color-outline);
+    --color-text-subtle: var(--color-on-surface-variant);
+    --color-text-on-primary: var(--color-on-primary);
+    --color-surface-2: var(--color-surface-container);
+    --color-bg: var(--color-background);
+
+    /* Neutral scale aliases */
+    --color-neutral-0: var(--color-on-surface);
+    --color-neutral-50: var(--color-surface-container-low);
+    --color-neutral-100: var(--color-surface-container);
+    --color-neutral-200: var(--color-outline-variant);
+    --color-neutral-300: var(--color-outline);
+    --color-neutral-400: var(--color-on-surface-variant);
+    --color-neutral-500: var(--color-on-surface-variant);
+    --color-neutral-600: var(--color-on-surface-variant);
+    --color-neutral-700: var(--color-on-surface);
+    --color-neutral-800: var(--color-on-surface);
+    --color-neutral-900: var(--color-on-surface);
+    --color-neutral-950: var(--color-surface-container-lowest);
+
+    /* Primary scale aliases */
+    --color-primary-50: var(--color-primary-container);
+    --color-primary-100: var(--color-primary-container);
+    --color-primary-200: var(--color-outline-variant);
+    --color-primary-300: var(--color-primary-dim);
+    --color-primary-400: var(--color-primary-dim);
+    --color-primary-500: var(--color-primary);
+    --color-primary-600: var(--color-primary);
+    --color-primary-700: var(--color-primary-dim);
+    --color-primary-800: var(--color-primary-container);
+    --color-primary-900: var(--color-primary-container);
+
+    /* Error scale aliases */
+    --color-error-50: var(--color-error-container);
+    --color-error-200: var(--color-error-container);
+    --color-error-500: var(--color-error);
+    --color-error-600: var(--color-error);
+    --color-error-700: var(--color-error);
+
+    /* Success scale aliases */
+    --color-success-50: var(--color-surface-container);
+    --color-success-200: var(--color-primary-container);
+    --color-success-500: #6db076;
+    --color-success-600: #5a9863;
+    --color-success-700: #4a7f52;
+
+    /* Radius aliases for old components */
+    --radius-xl: var(--radius-lg);
+    --radius-2xl: var(--radius-lg);
 }
