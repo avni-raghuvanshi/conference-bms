@@ -13,12 +13,9 @@ import Button from '@/components/ui/Button';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import styles from './BookingForm.module.css';
 import { Room, TimeSlot, BookingPayload } from '@/lib/types';
-import {
-    checkUser,
-    sendOtp,
-    getBookedDates,
-    createBooking,
-} from '@/lib/api';
+import { checkUser, sendOtp, getBookedDates, createBooking } from '@/lib/api';
+
+const RATE_PER_HOUR = 4500;
 
 interface FormErrors {
     room?: string;
@@ -62,7 +59,7 @@ export default function BookingForm() {
 
     const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
     const [date, setDate] = useState('');
-    const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+    const [selectedSlots, setSelectedSlots] = useState<TimeSlot[]>([]);
     const [title, setTitle] = useState('');
     const [email, setEmail] = useState('');
     const [attendees, setAttendees] = useState<string[]>([]);
@@ -71,17 +68,14 @@ export default function BookingForm() {
     const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
 
-    // Availability: track booked dates for the currently viewed month
     const now = new Date();
     const [viewYear, setViewYear] = useState(now.getFullYear());
     const [viewMonth, setViewMonth] = useState(now.getMonth());
     const [bookedDates, setBookedDates] = useState<string[]>([]);
 
-    // OTP flow
     const [showOtp, setShowOtp] = useState(false);
     const [otpToken, setOtpToken] = useState('');
 
-    // Fetch booked dates whenever room or viewed month changes
     useEffect(() => {
         if (!selectedRoom) {
             setBookedDates([]);
@@ -95,14 +89,14 @@ export default function BookingForm() {
 
     const handleRoomSelect = useCallback((room: Room) => {
         setSelectedRoom(room);
-        setSelectedSlot(null);
+        setSelectedSlots([]);
         setBookedDates([]);
         setErrors((prev) => ({ ...prev, room: undefined }));
     }, []);
 
     const handleDateChange = useCallback((newDate: string) => {
         setDate(newDate);
-        setSelectedSlot(null);
+        setSelectedSlots([]);
         setErrors((prev) => ({ ...prev, date: undefined }));
     }, []);
 
@@ -115,7 +109,7 @@ export default function BookingForm() {
         const errs: FormErrors = {};
         if (!selectedRoom) errs.room = 'Please select a conference room.';
         if (!date) errs.date = 'Please select a date.';
-        if (!selectedSlot) errs.slot = 'Please select a time slot.';
+        if (selectedSlots.length === 0) errs.slot = 'Please select a time slot.';
         if (!title.trim()) errs.title = 'Please enter a meeting title.';
         if (!email.trim()) {
             errs.email = 'Please enter your email address.';
@@ -129,12 +123,15 @@ export default function BookingForm() {
         setSubmitting(true);
         setSubmitError('');
 
+        const firstSlot = selectedSlots[0];
+        const lastSlot = selectedSlots[selectedSlots.length - 1];
+
         const payload: BookingPayload = {
             roomId: selectedRoom!.id,
             date,
-            slotId: selectedSlot!.id,
-            startTime: selectedSlot!.startTime,
-            endTime: selectedSlot!.endTime,
+            slotIds: selectedSlots.map((s) => s.id),
+            startTime: firstSlot.startTime,
+            endTime: lastSlot.endTime,
             title: title.trim(),
             organizerEmail: email.trim().toLowerCase(),
             attendees,
@@ -154,7 +151,7 @@ export default function BookingForm() {
         }
     }
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setSubmitError('');
 
@@ -169,7 +166,6 @@ export default function BookingForm() {
             return;
         }
 
-        // If we already have a verified OTP token, proceed directly
         if (otpToken) {
             await submitBooking(otpToken);
             return;
@@ -185,7 +181,6 @@ export default function BookingForm() {
                 setSubmitting(false);
                 setShowOtp(true);
             } else {
-                // Existing user — skip OTP
                 await submitBooking();
             }
         } catch (err) {
@@ -197,7 +192,6 @@ export default function BookingForm() {
     function handleOtpVerified(token: string) {
         setOtpToken(token);
         setShowOtp(false);
-        // Submit immediately with the fresh token
         submitBooking(token);
     }
 
@@ -205,8 +199,13 @@ export default function BookingForm() {
         await sendOtp(email.trim().toLowerCase());
     }
 
+    const firstSlot = selectedSlots[0] ?? null;
+    const lastSlot = selectedSlots[selectedSlots.length - 1] ?? null;
+    const totalHours = selectedSlots.length;
+    const totalAmount = totalHours * RATE_PER_HOUR;
+
     const isFormValid =
-        !!selectedRoom && !!date && !!selectedSlot &&
+        !!selectedRoom && !!date && selectedSlots.length > 0 &&
         !!title.trim() && !!email.trim() && isValidEmail(email);
 
     return (
@@ -234,7 +233,7 @@ export default function BookingForm() {
                         <section className={styles.section} aria-labelledby="step-room">
                             <div className={styles.stepHeader}>
                                 <span className={styles.stepNum} aria-hidden="true">01</span>
-                                <h2 className={styles.stepTitle} id="step-room">Select Scale</h2>
+                                <h2 className={styles.stepTitle} id="step-room">Choose a Room</h2>
                             </div>
                             <RoomSelect
                                 selectedRoomId={selectedRoom?.id ?? null}
@@ -265,14 +264,14 @@ export default function BookingForm() {
                                 <div>
                                     <div className={styles.stepHeader}>
                                         <span className={styles.stepNum} aria-hidden="true">03</span>
-                                        <h2 className={styles.stepTitle} id="step-time">Availability</h2>
+                                        <h2 className={styles.stepTitle} id="step-time">Choose a Time</h2>
                                     </div>
                                     <TimeSlotPicker
                                         roomId={selectedRoom?.id ?? null}
                                         date={date}
-                                        selectedSlotId={selectedSlot?.id ?? null}
-                                        onSelect={(slot) => {
-                                            setSelectedSlot(slot);
+                                        selectedSlotIds={selectedSlots.map((s) => s.id)}
+                                        onSelect={(slots) => {
+                                            setSelectedSlots(slots);
                                             setErrors((prev) => ({ ...prev, slot: undefined }));
                                         }}
                                         error={errors.slot}
@@ -281,11 +280,11 @@ export default function BookingForm() {
                             </div>
                         </section>
 
-                        {/* Step 04 — Guest Details */}
+                        {/* Step 04 — Your Details */}
                         <section className={styles.section} aria-labelledby="step-details">
                             <div className={styles.stepHeader}>
                                 <span className={styles.stepNum} aria-hidden="true">04</span>
-                                <h2 className={styles.stepTitle} id="step-details">Guest Details</h2>
+                                <h2 className={styles.stepTitle} id="step-details">Your Details</h2>
                             </div>
                             <div className={styles.fieldsCard}>
                                 <Input
@@ -304,15 +303,15 @@ export default function BookingForm() {
                                 />
                                 <Input
                                     id="organizer-email"
-                                    label="Primary Coordinator"
+                                    label="Your Email Address"
                                     type="email"
                                     value={email}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
-                                        setOtpToken(''); // reset token if email changes
+                                        setOtpToken('');
                                         setErrors((prev) => ({ ...prev, email: undefined }));
                                     }}
-                                    placeholder="arch@conferra.spaces"
+                                    placeholder="you@example.com"
                                     required
                                     autoComplete="email"
                                     error={errors.email}
@@ -331,7 +330,6 @@ export default function BookingForm() {
                         <div className={styles.sidebarSticky}>
                             <div className={styles.sidebarCard}>
                                 <div className={styles.sidebarHeading}>
-                                    <span className={styles.sidebarLabel}>Transaction Details</span>
                                     <h2 className={styles.sidebarTitle}>Booking Summary</h2>
                                 </div>
 
@@ -349,7 +347,7 @@ export default function BookingForm() {
 
                                 <dl className={styles.summaryDetails}>
                                     <div className={styles.summaryRow}>
-                                        <dt className={styles.summaryKey}>Space</dt>
+                                        <dt className={styles.summaryKey}>Room</dt>
                                         <dd className={styles.summaryVal}>{selectedRoom?.name ?? '—'}</dd>
                                     </div>
                                     <div className={styles.summaryRow}>
@@ -359,14 +357,18 @@ export default function BookingForm() {
                                     <div className={styles.summaryRow}>
                                         <dt className={styles.summaryKey}>Time</dt>
                                         <dd className={styles.summaryVal}>
-                                            {selectedSlot
-                                                ? `${formatTime(selectedSlot.startTime)} — ${formatTime(selectedSlot.endTime)}`
+                                            {firstSlot && lastSlot
+                                                ? `${formatTime(firstSlot.startTime)} — ${formatTime(lastSlot.endTime)}`
                                                 : '—'}
                                         </dd>
                                     </div>
                                     <div className={styles.summaryRow}>
-                                        <dt className={styles.summaryKey}>Rate</dt>
-                                        <dd className={styles.summaryVal}>₹4,500 / session</dd>
+                                        <dt className={styles.summaryKey}>Total</dt>
+                                        <dd className={styles.summaryVal}>
+                                            {totalHours > 0
+                                                ? `${totalHours} hr × ₹${RATE_PER_HOUR.toLocaleString('en-IN')} = ₹${totalAmount.toLocaleString('en-IN')}`
+                                                : '—'}
+                                        </dd>
                                     </div>
                                 </dl>
 
@@ -387,7 +389,7 @@ export default function BookingForm() {
                                     disabled={!isFormValid || submitting}
                                     aria-describedby={!isFormValid ? 'form-incomplete-hint' : undefined}
                                 >
-                                    {submitting ? 'Confirming…' : 'Verify & Confirm'}
+                                    {submitting ? 'Confirming…' : 'Confirm Booking'}
                                 </Button>
 
                                 {!isFormValid && (
@@ -395,13 +397,6 @@ export default function BookingForm() {
                                         Complete all required fields to confirm.
                                     </p>
                                 )}
-
-                                <div className={styles.securityBadge} aria-label="Secured connection">
-                                    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">
-                                        <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
-                                    </svg>
-                                    <span>Secured End-to-End Encryption</span>
-                                </div>
                             </div>
                         </div>
                     </aside>

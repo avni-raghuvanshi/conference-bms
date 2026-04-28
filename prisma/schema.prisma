@@ -41,6 +41,7 @@ model Room {
 
 model Booking {
   id              String        @id @default(cuid())
+  ref             String?       @unique
   roomId          String
   date            String        // "YYYY-MM-DD"
   startTime       String        // "HH:MM"

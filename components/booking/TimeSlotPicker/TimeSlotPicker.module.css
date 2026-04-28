@@ -42,6 +42,14 @@
     border: 2px solid hsl(168 20% 72% / 0.6);
 }
 
+.slotFirst {
+    border-block-end: 1px solid var(--color-primary-border);
+}
+
+.slotLast {
+    border-block-start: 1px solid var(--color-primary-border);
+}
+
 .slotBooked {
     background: var(--color-surface-container-lowest);
     opacity: 0.4;
@@ -117,6 +125,14 @@
     padding: var(--space-3) var(--space-4);
     background: var(--color-surface-container);
     margin-bottom: var(--space-3);
+}
+
+.maxNote {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--color-on-surface-variant);
+    margin-block-start: var(--space-2);
+    text-align: right;
 }
 
 .error {

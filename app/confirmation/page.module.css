@@ -99,7 +99,7 @@
 }
 
 .iconWrapSuccess {
-    border-color: hsl(168 20% 72% / 0.3);
+    border-color: var(--color-primary-border);
     color: var(--color-primary);
 }
 
@@ -248,7 +248,7 @@
 .confirmedDivider {
     width: 1px;
     min-height: 5rem;
-    background: hsl(168 20% 72% / 0.3);
+    background: var(--color-primary-border);
     flex-shrink: 0;
 }
 
@@ -312,7 +312,7 @@
 
 .accessBadgeSuccess {
     color: var(--color-primary);
-    border-color: hsl(168 20% 72% / 0.3);
+    border-color: var(--color-primary-border);
 }
 
 .accessBadgeError {

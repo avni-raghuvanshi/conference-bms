@@ -4,10 +4,18 @@
     position: relative;
     min-height: 100dvh;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
     padding-inline: var(--space-12);
+    padding-block-end: var(--space-20);
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        align-items: center;
+        padding-block-end: 0;
+    }
 }
 
 .heroImageWrapper {
@@ -55,7 +63,7 @@
 }
 
 .heroSubtitle {
-    font-size: var(--text-xl);
+    font-size: clamp(var(--text-base), 2.5vw, var(--text-xl));
     color: var(--color-on-surface-variant);
     max-width: 44ch;
     line-height: var(--leading-relaxed);
@@ -129,6 +137,18 @@
     margin-bottom: var(--space-6);
 }
 
+/* ── Mobile section padding ── */
+
+@media (max-width: 767px) {
+    .hero,
+    .amenities,
+    .spaces,
+    .philosophy,
+    .footer {
+        padding-inline: var(--space-4);
+    }
+}
+
 /* ── Amenities ── */
 
 .amenities {
@@ -186,6 +206,24 @@
     gap: var(--space-6);
 }
 
+@media (max-width: 767px) {
+    .bentoGrid {
+        grid-auto-rows: auto;
+    }
+
+    .bentoCard {
+        min-height: 180px;
+    }
+
+    .bentoCatering {
+        flex-direction: column;
+    }
+
+    .bentoCoffeeViz {
+        display: none;
+    }
+}
+
 @media (min-width: 768px) {
     .bentoGrid {
         grid-template-columns: repeat(6, 1fr);
@@ -216,7 +254,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: border-color var(--transition-luxury);
+    transition: border-color var(--transition-slow-ease);
 }
 
 .bentoGlass {
@@ -243,7 +281,7 @@
     object-fit: cover;
     filter: grayscale(1);
     opacity: 0.4;
-    transition: scale var(--transition-luxury), opacity var(--transition-luxury);
+    transition: scale var(--transition-slow-ease), opacity var(--transition-slow-ease);
 }
 
 .bentoLocation:hover .bentoLocationImage {
@@ -292,7 +330,7 @@
     align-items: center;
     justify-content: center;
     color: var(--color-primary);
-    transition: rotate var(--transition-luxury);
+    transition: rotate var(--transition-slow-ease);
 }
 
 .bentoCentered:hover .bentoOrb {
@@ -389,7 +427,7 @@
 .bentoDescPrimary {
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    color: hsl(75 25% 20% / 0.8);
+    color: var(--color-on-primary);
     font-weight: var(--font-light);
     line-height: var(--leading-relaxed);
 }
@@ -431,13 +469,36 @@
 .spacesDivider {
     width: 8rem;
     height: 1px;
-    background: hsl(168 20% 72% / 0.3);
+    background: var(--color-primary-border);
 }
 
 .spacesList {
     display: flex;
     flex-direction: column;
     gap: calc(var(--space-48) * 1.33);
+}
+
+@media (max-width: 767px) {
+    .spacesList {
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: var(--space-4);
+        scrollbar-width: none;
+    }
+
+    .spacesList::-webkit-scrollbar {
+        display: none;
+    }
+
+    .spaceItem {
+        flex: 0 0 85vw;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
 }
 
 .spaceItem {
@@ -472,9 +533,9 @@
     filter: grayscale(1) brightness(0.75);
     scale: 1.01;
     transition:
-        filter var(--transition-luxury),
-        brightness var(--transition-luxury),
-        scale var(--transition-luxury);
+        filter var(--transition-slow-ease),
+        brightness var(--transition-slow-ease),
+        scale var(--transition-slow-ease);
 }
 
 .spaceImageWrapper:hover .spaceImage {
@@ -487,7 +548,7 @@
     inset: 0;
     background: hsl(168 20% 72% / 0.1);
     opacity: 0;
-    transition: opacity var(--transition-luxury);
+    transition: opacity var(--transition-slow-ease);
     pointer-events: none;
     z-index: 1;
 }
@@ -520,6 +581,12 @@
 
 .spaceInfo {
     padding-inline: var(--space-12);
+}
+
+@media (max-width: 767px) {
+    .spaceInfo {
+        padding-inline: 0;
+    }
 }
 
 @media (min-width: 1024px) {

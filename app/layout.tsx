@@ -13,26 +13,26 @@ const notoSerif = Noto_Serif({
 
 const montserrat = Montserrat({
     subsets: ['latin'],
-    weight: ['200', '300', '400', '500', '600', '700', '800'],
+    weight: ['300', '400', '600', '700'],
     variable: '--ff-sans',
     display: 'swap',
 });
 
 export const metadata: Metadata = {
     title: {
-        default: 'CONFERRA — Architectural Sanctuaries for Dialogue',
-        template: '%s | CONFERRA',
+        default: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
+        template: '%s | Conferra',
     },
     description:
-        'Elevated meeting spaces in the heart of Greater Kailash. Designed for focus, engineered for collaboration, curated for the modern visionary.',
-    keywords: ['conference room', 'meeting space', 'Greater Kailash', 'executive suite', 'Delhi'],
+        'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
+    keywords: ['conference room', 'meeting room', 'Greater Kailash', 'GK II', 'Delhi', 'book meeting room'],
     openGraph: {
         type: 'website',
         locale: 'en_IN',
-        siteName: 'CONFERRA',
-        title: 'CONFERRA — Architectural Sanctuaries for Dialogue',
+        siteName: 'Conferra',
+        title: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
         description:
-            'Elevated meeting spaces in the heart of Greater Kailash. Designed for focus, engineered for collaboration.',
+            'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
     },
 };
 

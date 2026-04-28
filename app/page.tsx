@@ -4,9 +4,9 @@ import Image from 'next/image';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-    title: 'CONFERRA — Architectural Sanctuaries for Dialogue',
+    title: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
     description:
-        'Elevated meeting spaces in the heart of Greater Kailash. Designed for focus, engineered for collaboration.',
+        'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
 };
 
 const SPACES = [
@@ -15,30 +15,30 @@ const SPACES = [
         label: 'Executive Suite',
         name: 'Alpha Suite',
         description:
-            'Our flagship executive chamber. A grand-scale environment optimised for high-stakes negotiation and critical strategic alignment.',
+            'Seats 12. Ideal for board meetings, strategy sessions, and client presentations. Includes display screen and conferencing setup.',
         imageUrl:
             'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',
-        specs: ['12 PERSONS', '4K ARRAY', 'ACOUSTIC SYSTEM'],
+        specs: ['12 PERSONS', '4K DISPLAY', 'CONFERENCING'],
     },
     {
         number: '02',
         label: 'Grand Forum',
         name: 'Gamma Hall',
         description:
-            'Engineered for synergy. Gamma Hall features an expansive layout designed to foster open discourse and creative fluidity.',
+            'Seats up to 30. Large conference hall with projection screen. Suited for training, seminars, and team meetings.',
         imageUrl:
             'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80',
-        specs: ['30 PERSONS', 'PROJECTION STAGE', 'BREAKOUT AREAS'],
+        specs: ['30 PERSONS', 'PROJECTION SCREEN', 'BREAKOUT AREAS'],
     },
     {
         number: '03',
         label: 'Focus Cell',
         name: 'Delta Pod',
         description:
-            'Total immersive focus. The Delta Pod is a sanctuary for private consultation, high-profile interviews, or deep analytical work.',
+            'Seats 4. Private room for client meetings, interviews, and focused discussions.',
         imageUrl:
             'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1200&q=80',
-        specs: ['4 PERSONS', 'PRIVATE HUB', 'SOFT LIGHTING'],
+        specs: ['4 PERSONS', 'PRIVATE', 'SOUNDPROOFED'],
     },
 ];
 
@@ -51,7 +51,7 @@ export default function HomePage() {
                     <div className={styles.heroImageWrapper}>
                         <Image
                             src="https://res.cloudinary.com/doggeavv4/image/upload/v1774977603/hero_image_hskvjv.webp"
-                            alt="Conferra executive boardroom — a modern, dark-themed meeting space with architectural lighting"
+                            alt="Conferra boardroom — a modern, dark-themed meeting space with architectural lighting"
                             fill
                             priority
                             className={styles.heroImage}
@@ -61,22 +61,18 @@ export default function HomePage() {
                     </div>
                     <div className={styles.heroContent}>
                         <h1 className={styles.heroTitle}>
-                            Professionalism
+                            Professional
                             <br />
-                            <em className={styles.heroTitleAccent}>Redefined.</em>
+                            <em className={styles.heroTitleAccent}>Meeting Rooms.</em>
                         </h1>
                         <p className={styles.heroSubtitle}>
-                            Elevated meeting spaces in the heart of Greater Kailash. Designed for
-                            focus, engineered for collaboration, and curated for the modern
-                            visionary.
+                            Private meeting rooms in GK II, South Delhi. Audio/video
+                            conferencing included. Book by the hour.
                         </p>
                         <div className={styles.heroCta}>
                             <Link href="/booking" className={styles.ctaPrimary}>
-                                EXPLORE THE SPACES
+                                View Available Rooms
                             </Link>
-                            <button type="button" className={styles.ctaSecondary}>
-                                VIRTUAL TOUR
-                            </button>
                         </div>
                     </div>
                 </section>
@@ -90,22 +86,21 @@ export default function HomePage() {
                     <div className={styles.amenitiesInner}>
                         <header className={styles.amenitiesHeader}>
                             <div className={styles.amenitiesLeft}>
-                                <span className={styles.sectionLabel}>The Infrastructure</span>
+                                <span className={styles.sectionLabel}>What's Included</span>
                                 <h2 id="amenities-title" className={styles.amenitiesTitle}>
-                                    Precision in every
+                                    Everything you need
                                     <br />
-                                    detail of your workflow.
+                                    for a professional meeting.
                                 </h2>
                             </div>
                             <p className={styles.amenitiesDesc}>
-                                We remove the friction of business. From ultra-low latency
-                                connectivity to artisanal hospitality, every touchpoint is a
-                                commitment to your success.
+                                Every room includes high-speed Wi-Fi, audio/video conferencing,
+                                and tea/coffee service. No setup hassle, no surprises.
                             </p>
                         </header>
 
                         <div className={styles.bentoGrid}>
-                            {/* Gigabit */}
+                            {/* Wi-Fi */}
                             <article className={`${styles.bentoCard} ${styles.bentoGlass}`}>
                                 <div className={styles.bentoIcon} aria-hidden="true">
                                     <svg
@@ -124,10 +119,9 @@ export default function HomePage() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className={styles.bentoTitle}>Gigabit Backbone</h3>
+                                    <h3 className={styles.bentoTitle}>High-Speed Wi-Fi</h3>
                                     <p className={styles.bentoDesc}>
-                                        Symmetrical fiber-optic arrays ensuring zero-latency
-                                        transitions for global collaboration.
+                                        Reliable broadband for video calls and file transfers.
                                     </p>
                                 </div>
                             </article>
@@ -170,38 +164,43 @@ export default function HomePage() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className={styles.bentoTitle}>GK Strategic Hub</h3>
+                                        <h3 className={styles.bentoTitle}>Located in GK II, New Delhi</h3>
                                         <p className={styles.bentoDesc}>
-                                            At the epicentre of South Delhi's premium business
-                                            district.
+                                            M-Block Market, Greater Kailash II — easy access from
+                                            South and Central Delhi.
                                         </p>
                                     </div>
                                 </div>
                             </article>
 
-                            {/* 24/7 */}
+                            {/* Audio/Video Conferencing */}
                             <article className={`${styles.bentoCard} ${styles.bentoCentered}`}>
-                                <div className={styles.bentoOrb} aria-hidden="true">
+                                <div className={styles.bentoIcon} aria-hidden="true">
                                     <svg
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
-                                        width="28"
-                                        height="28"
+                                        width="36"
+                                        height="36"
                                     >
                                         <path
-                                            d="M12 12c-2-2.5-4-4-6-4a4 4 0 100 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 000-8c-2 0-4 1.5-6 4z"
+                                            d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                         />
                                     </svg>
                                 </div>
-                                <h3 className={styles.bentoLargeNum}>24 / 7</h3>
-                                <p className={styles.bentoMiniLabel}>Member Access</p>
+                                <div>
+                                    <h3 className={styles.bentoTitle}>Audio/Video Conferencing</h3>
+                                    <p className={styles.bentoDesc}>
+                                        Display screen, camera, and conferencing system included
+                                        in every room.
+                                    </p>
+                                </div>
                             </article>
 
-                            {/* Catering */}
+                            {/* Tea & Coffee */}
                             <article className={`${styles.bentoCard} ${styles.bentoGlass} ${styles.bentoCatering}`}>
                                 <div className={styles.bentoCateringText}>
                                     <div className={styles.bentoIcon} aria-hidden="true">
@@ -226,10 +225,10 @@ export default function HomePage() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className={styles.bentoTitle}>Curated Sustenance</h3>
+                                        <h3 className={styles.bentoTitle}>Tea, Coffee & Light Snacks</h3>
                                         <p className={styles.bentoDesc}>
-                                            Bespoke culinary service curated by
-                                            Michelin-recognised local chefs.
+                                            Tea and coffee served during your session. Light snacks
+                                            available on request.
                                         </p>
                                     </div>
                                 </div>
@@ -256,7 +255,7 @@ export default function HomePage() {
                                 </div>
                             </article>
 
-                            {/* Security */}
+                            {/* Private & Soundproofed */}
                             <article className={`${styles.bentoCard} ${styles.bentoPrimary}`}>
                                 <div className={styles.bentoIconPrimary} aria-hidden="true">
                                     <svg
@@ -275,10 +274,10 @@ export default function HomePage() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className={styles.bentoTitlePrimary}>Secure Privacy</h3>
+                                    <h3 className={styles.bentoTitlePrimary}>Private & Soundproofed</h3>
                                     <p className={styles.bentoDescPrimary}>
-                                        Sound-isolated chambers with integrated data encryption
-                                        protocols.
+                                        Rooms are soundproofed for confidential meetings and client
+                                        consultations.
                                     </p>
                                 </div>
                             </article>
@@ -294,12 +293,9 @@ export default function HomePage() {
                 >
                     <div className={styles.spacesInner}>
                         <header className={styles.spacesHeader}>
-                            <span className={styles.sectionLabel}>The Portfolio</span>
-                            <h2
-                                id="spaces-title"
-                                className={`${styles.spacesTitle} ${styles.italic}`}
-                            >
-                                Architectural Vessels.
+                            <span className={styles.sectionLabel}>Our Rooms</span>
+                            <h2 id="spaces-title" className={styles.spacesTitle}>
+                                Choose Your Room
                             </h2>
                             <div className={styles.spacesDivider} aria-hidden="true" />
                         </header>
@@ -341,7 +337,7 @@ export default function HomePage() {
                                             ))}
                                         </ul>
                                         <Link href="/booking" className={styles.spaceLink}>
-                                            Acquire Access
+                                            Book This Room
                                             <svg
                                                 viewBox="0 0 24 24"
                                                 fill="none"
@@ -364,27 +360,6 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-
-                {/* ── Philosophy ── */}
-                <section className={styles.philosophy} aria-label="Conferra philosophy">
-                    <div className={styles.philosophyBg} aria-hidden="true">
-                        ETHOS
-                    </div>
-                    <blockquote className={styles.philosophyQuote}>
-                        <p>
-                            "Space is not merely a container for activity; it is the silent
-                            catalyst for{' '}
-                            <em className={styles.philosophyAccent}>
-                                extraordinary thinking
-                            </em>
-                            ."
-                        </p>
-                        <footer className={styles.philosophyAttrib}>
-                            <div className={styles.philosophyLine} aria-hidden="true" />
-                            <cite>Conferra Philosophy</cite>
-                        </footer>
-                    </blockquote>
-                </section>
             </main>
 
             {/* ── Footer ── */}
@@ -394,26 +369,25 @@ export default function HomePage() {
                         <div className={styles.footerBrand}>
                             <div className={styles.footerLogo}>CONFERRA</div>
                             <p className={styles.footerTagline}>
-                                Defining the spatial standards for the capital's intellectual and
-                                corporate elite.
+                                Professional meeting rooms in GK II, South Delhi.
                             </p>
                         </div>
                         <nav className={styles.footerNav} aria-label="Footer navigation">
                             <p className={styles.footerNavTitle}>Navigation</p>
                             <ul className={styles.footerNavList}>
                                 <li>
-                                    <Link href="#spaces" className={styles.footerNavLink}>
-                                        The Portfolio
+                                    <Link href="/#spaces" className={styles.footerNavLink}>
+                                        Rooms
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="#features" className={styles.footerNavLink}>
-                                        Experience
+                                    <Link href="/#features" className={styles.footerNavLink}>
+                                        Facilities
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/booking" className={styles.footerNavLink}>
-                                        Book A Space
+                                        Book a Room
                                     </Link>
                                 </li>
                                 <li>
@@ -427,25 +401,23 @@ export default function HomePage() {
                             <p className={styles.footerNavTitle}>Inquiries</p>
                             <p className={styles.footerContactMeta}>General</p>
                             <a
-                                href="mailto:concierge@conferra.com"
+                                href="mailto:reservations@conferra.co"
                                 className={styles.footerContactValue}
                             >
-                                concierge@conferra.com
+                                reservations@conferra.co
                             </a>
                             <p className={styles.footerContactMeta}>Location</p>
                             <p className={styles.footerContactValue}>M-Block, GK II, New Delhi</p>
                         </address>
                     </div>
                     <div className={styles.footerBottom}>
-                        <span className={styles.footerCopy}>
-                            © 2026 CONFERRA ARCHITECTURAL SPACES.
-                        </span>
+                        <span className={styles.footerCopy}>© 2026 CONFERRA.</span>
                         <div className={styles.footerLegal}>
                             <Link href="#" className={styles.footerLegalLink}>
-                                Terms of Presence
+                                Terms & Conditions
                             </Link>
                             <Link href="#" className={styles.footerLegalLink}>
-                                Privacy Ordinance
+                                Privacy Policy
                             </Link>
                             <Link href="#" className={styles.footerLegalLink}>
                                 Accessibility

@@ -225,3 +225,27 @@
         padding: var(--space-6);
     }
 }
+
+@media (max-width: 1023px) {
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        inset-inline: 0;
+        z-index: var(--z-raised);
+        background: var(--color-surface-container-low);
+        border-top: 1px solid hsl(0 0% 100% / 0.08);
+    }
+
+    .sidebarSticky {
+        position: static;
+    }
+
+    .sidebarCard {
+        border: none;
+        border-radius: 0;
+    }
+
+    .roomPreview {
+        display: none;
+    }
+}

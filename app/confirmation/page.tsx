@@ -52,9 +52,9 @@ async function ConfirmationContent({ bookingId }: { bookingId: string | undefine
                 {/* Left: Identity status */}
                 <section className={styles.identity} aria-labelledby="identity-title">
                     <div className={styles.identityHeading}>
-                        <span className={styles.kicker}>Secure Onboarding</span>
+                        <span className={styles.kicker}>Booking Confirmed</span>
                         <h1 className={styles.title} id="identity-title">
-                            Identity<br /><em className={styles.titleAccent}>Verified.</em>
+                            You're<br /><em className={styles.titleAccent}>Booked.</em>
                         </h1>
                     </div>
 
@@ -67,14 +67,8 @@ async function ConfirmationContent({ bookingId }: { bookingId: string | undefine
 
                         <div className={styles.statusBody}>
                             <p className={styles.statusText}>
-                                Your reservation has been successfully confirmed. You are now authorised to access the selected space at the scheduled time.
+                                Your meeting room is confirmed. A confirmation email has been sent to your inbox.
                             </p>
-                            <div className={styles.encryptedBadge}>
-                                <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12" aria-hidden="true">
-                                    <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
-                                </svg>
-                                <span>Encrypted Session Active</span>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -82,23 +76,23 @@ async function ConfirmationContent({ bookingId }: { bookingId: string | undefine
                 {/* Right: Session card */}
                 <section className={styles.sessionCard} aria-label="Booking session details">
                     <div className={styles.sessionInner}>
-                        <p className={styles.sessionKicker}>Session Active</p>
+                        <p className={styles.sessionKicker}>Booking Details</p>
                         <p className={styles.confeRra}>CONFERRA</p>
 
-                        <p className={styles.accessLabel}>ACCESS GRANTED — SCHEDULE TOKEN</p>
-                        <p className={styles.bookingRef} aria-label={`Booking reference ${booking.id}`}>
-                            {booking.id}
+                        <p className={styles.accessLabel}>Booking Reference</p>
+                        <p className={styles.bookingRef} aria-label={`Booking reference ${booking.ref ?? booking.id}`}>
+                            {booking.ref ?? booking.id}
                         </p>
 
                         <div className={styles.sessionDivider} aria-hidden="true" />
 
                         <dl className={styles.sessionDetails}>
                             <div className={styles.sessionRow}>
-                                <dt className={styles.sessionKey}>Space</dt>
+                                <dt className={styles.sessionKey}>Room</dt>
                                 <dd className={styles.sessionVal}>{roomName}</dd>
                             </div>
                             <div className={styles.sessionRow}>
-                                <dt className={styles.sessionKey}>Access Window</dt>
+                                <dt className={styles.sessionKey}>Time</dt>
                                 <dd className={styles.sessionVal}>
                                     {formatTime(booking.startTime)} — {formatTime(booking.endTime)}
                                 </dd>
@@ -108,7 +102,7 @@ async function ConfirmationContent({ bookingId }: { bookingId: string | undefine
                                 <dd className={styles.sessionVal}>{formatDate(booking.date)}</dd>
                             </div>
                             <div className={styles.sessionRow}>
-                                <dt className={styles.sessionKey}>Concierge</dt>
+                                <dt className={styles.sessionKey}>Booked by</dt>
                                 <dd className={styles.sessionVal}>{booking.organizerEmail}</dd>
                             </div>
                         </dl>
@@ -121,8 +115,8 @@ async function ConfirmationContent({ bookingId }: { bookingId: string | undefine
                 <div className={styles.confirmedLeft}>
                     <div className={styles.confirmedDivider} aria-hidden="true" />
                     <div>
-                        <p className={styles.confirmedKicker} id="confirmed-title">Reservation</p>
-                        <p className={styles.confirmedRef}>{booking.id}</p>
+                        <p className={styles.confirmedKicker} id="confirmed-title">Your Booking</p>
+                        <p className={styles.confirmedRef}>{booking.ref ?? booking.id}</p>
                         <div className={styles.confirmedMeta}>
                             <p className={styles.confirmedMetaItem}>{booking.title}</p>
                             <p className={styles.confirmedMetaItem}>{roomName}</p>
@@ -131,9 +125,6 @@ async function ConfirmationContent({ bookingId }: { bookingId: string | undefine
                 </div>
 
                 <div className={styles.confirmedRight}>
-                    <div className={[styles.accessBadge, styles.accessBadgeSuccess].join(' ')}>
-                        ACCESS GRANTED
-                    </div>
                     <div className={styles.actions}>
                         <Link href="/" className={styles.actionGhost}>Return to Home</Link>
                         <Link href="/booking" className={styles.actionPrimary}>Book Another Room</Link>

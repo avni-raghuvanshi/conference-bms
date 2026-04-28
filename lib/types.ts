@@ -19,9 +19,9 @@ export interface TimeSlot {
 export interface BookingPayload {
     roomId: string;
     date: string;           // "YYYY-MM-DD"
-    slotId: string;
-    startTime: string;      // "HH:MM"
-    endTime: string;        // "HH:MM"
+    slotIds: string[];      // ordered list of selected slot IDs
+    startTime: string;      // first slot's startTime "HH:MM"
+    endTime: string;        // last slot's endTime "HH:MM"
     title: string;
     organizerEmail: string;
     attendees: string[];

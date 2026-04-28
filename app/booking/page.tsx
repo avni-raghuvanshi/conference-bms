@@ -3,13 +3,13 @@ import BookingForm from '@/components/booking/BookingForm';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-    title: 'Configure Your Environment',
+    title: 'Book a Meeting Room',
     description:
-        'Reserve a conference room for your next meeting. Select a room, pick a date, choose a time slot, and confirm in seconds.',
+        'Reserve a meeting room in GK II, New Delhi. Select a room, pick a date, choose a time slot, and confirm in seconds.',
     openGraph: {
-        title: 'Configure Your Environment | CONFERRA',
+        title: 'Book a Meeting Room | Conferra',
         description:
-            'Reserve a premium conference room. Real-time availability, seamless scheduling.',
+            'Reserve a private meeting room in Greater Kailash II. Real-time availability.',
     },
 };
 
@@ -18,11 +18,11 @@ export default function BookingPage() {
         <div className={styles.page}>
             <header className={styles.pageHeader}>
                 <div className={styles.pageHeaderLeft}>
-                    <span className={styles.kicker}>RESERVATION GATEWAY</span>
+                    <span className={styles.kicker}>Booking</span>
                     <h1 className={styles.pageTitle}>
-                        Configure Your
+                        Book a
                         <br />
-                        Environment.
+                        Meeting Room.
                     </h1>
                 </div>
                 <div className={styles.pageHeaderRule} aria-hidden="true" />
