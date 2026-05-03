@@ -92,12 +92,13 @@
 /* ── Sidebar ── */
 
 .sidebar {
-    /* container */
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-8));
 }
 
 .sidebarSticky {
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-8));
+    /* position: sticky;
+    top: calc(var(--header-height) + var(--space-8)); */
 }
 
 .sidebarCard {
@@ -108,7 +109,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-5);
 }
 
 /* ── Sidebar heading ── */
@@ -130,7 +131,7 @@
 
 .sidebarTitle {
     font-family: var(--font-serif);
-    font-size: var(--text-3xl);
+    font-size: var(--text-xl);
     font-weight: var(--font-bold);
     color: var(--color-primary);
     line-height: var(--leading-tight);
@@ -230,6 +231,7 @@
     .sidebar {
         position: fixed;
         bottom: 0;
+        top: unset;
         inset-inline: 0;
         z-index: var(--z-raised);
         background: var(--color-surface-container-low);
@@ -243,7 +245,12 @@
     .sidebarCard {
         border: none;
         border-radius: 0;
+        gap: var(--space-4);
     }
+
+    .summaryDetails {
+    gap: var(--space-2);
+}
 
     .roomPreview {
         display: none;

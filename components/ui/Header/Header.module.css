@@ -148,6 +148,9 @@
 }
 
 @media (max-width: 767px) {
+    .bookButton{
+        display: none;
+    }
     .overlay {
         display: block;
     }

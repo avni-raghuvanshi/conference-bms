@@ -127,3 +127,10 @@
 .hiddenText {
     visibility: hidden;
 }
+
+@media (max-width: 767px) {
+    .lg{
+        height: unset;
+        padding: var(--space-2) var(--space-5);
+    }
+}
