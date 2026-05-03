@@ -18,7 +18,12 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma client (requires schema, not a live DB)
+# --- ADD THESE LINES HERE ---
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+# ----------------------------
+
+# Generate Prisma client
 RUN npx prisma generate
 
 ENV NEXT_TELEMETRY_DISABLED=1
