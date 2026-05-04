@@ -66,8 +66,7 @@ export default function HomePage() {
                             <em className={styles.heroTitleAccent}>Meeting Rooms.</em>
                         </h1>
                         <p className={styles.heroSubtitle}>
-                            Private meeting rooms in GK II, South Delhi. Audio/video
-                            conferencing included. Book by the hour.
+                            High quality meeting rooms designed for focus and productivity. Located in the heart of the city.
                         </p>
                         <div className={styles.heroCta}>
                             <Link href="/booking" className={styles.ctaPrimary}>
@@ -164,9 +163,9 @@ export default function HomePage() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className={styles.bentoTitle}>Located in GK II, New Delhi</h3>
+                                        <h3 className={styles.bentoTitle}>Located in the heart of Delhi</h3>
                                         <p className={styles.bentoDesc}>
-                                            M-Block Market, Greater Kailash II — easy access from
+                                            A block, East of Kailash — easy access from
                                             South and Central Delhi.
                                         </p>
                                     </div>
@@ -369,7 +368,7 @@ export default function HomePage() {
                         <div className={styles.footerBrand}>
                             <div className={styles.footerLogo}>CONFERRA</div>
                             <p className={styles.footerTagline}>
-                                Professional meeting rooms in GK II, South Delhi.
+                                Professional meeting rooms in South Delhi.
                             </p>
                         </div>
                         <nav className={styles.footerNav} aria-label="Footer navigation">
@@ -398,7 +397,7 @@ export default function HomePage() {
                             </ul>
                         </nav>
                         <address className={styles.footerContact}>
-                            <p className={styles.footerNavTitle}>Inquiries</p>
+                            <p className={styles.footerNavTitle}>Enquiries</p>
                             <p className={styles.footerContactMeta}>General</p>
                             <a
                                 href="mailto:reservations@conferra.co"
@@ -407,7 +406,7 @@ export default function HomePage() {
                                 reservations@conferra.co
                             </a>
                             <p className={styles.footerContactMeta}>Location</p>
-                            <p className={styles.footerContactValue}>M-Block, GK II, New Delhi</p>
+                            <p className={styles.footerContactValue}>A12, A block, East of Kailash, New Delhi</p>
                         </address>
                     </div>
                     <div className={styles.footerBottom}>

@@ -215,10 +215,6 @@
         min-height: 180px;
     }
 
-    .bentoCatering {
-        flex-direction: column;
-    }
-
     .bentoCoffeeViz {
         display: none;
     }
@@ -357,6 +353,12 @@
     flex-direction: row;
     align-items: center;
     gap: var(--space-12);
+}
+
+@media (max-width: 768px){
+    .bentoCatering {
+        flex-direction: column;
+    }
 }
 
 .bentoCateringText {

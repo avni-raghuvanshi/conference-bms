@@ -373,24 +373,29 @@ export default function BookingForm() {
                                 </dl>
 
                                 {submitError && (
-                                    <ErrorMessage
-                                        title="Booking failed"
-                                        message={submitError}
-                                        onRetry={() => setSubmitError('')}
-                                    />
+                                    <div className={styles.errorWrap}>
+                                        <ErrorMessage
+                                            title="Booking failed"
+                                            message={submitError}
+                                            onRetry={() => setSubmitError('')}
+                                        />
+                                    </div>
                                 )}
 
-                                <Button
-                                    type="submit"
-                                    variant="primary"
-                                    size="lg"
-                                    fullWidth
-                                    loading={submitting}
-                                    disabled={!isFormValid || submitting}
-                                    aria-describedby={!isFormValid ? 'form-incomplete-hint' : undefined}
-                                >
-                                    {submitting ? 'Confirming…' : 'Confirm Booking'}
-                                </Button>
+                                <div className={styles.submitWrap}>
+                                    <Button
+                                        type="submit"
+                                        variant="primary"
+                                        size="lg"
+                                        fullWidth
+                                        className={styles.confirm_button}
+                                        loading={submitting}
+                                        disabled={!isFormValid || submitting}
+                                        aria-describedby={!isFormValid ? 'form-incomplete-hint' : undefined}
+                                    >
+                                        {submitting ? 'Confirming…' : 'Confirm Booking'}
+                                    </Button>
+                                </div>
 
                                 {!isFormValid && (
                                     <p id="form-incomplete-hint" className={styles.formHint}>
