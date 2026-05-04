@@ -92,12 +92,13 @@
 /* ── Sidebar ── */
 
 .sidebar {
-    /* container */
+    position: sticky;
+    top: var(--header-height);
 }
 
 .sidebarSticky {
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-8));
+    /* position: sticky;
+    top: calc(var(--header-height) + var(--space-8)); */
 }
 
 .sidebarCard {
@@ -108,7 +109,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-5);
 }
 
 /* ── Sidebar heading ── */
@@ -130,7 +131,7 @@
 
 .sidebarTitle {
     font-family: var(--font-serif);
-    font-size: var(--text-3xl);
+    font-size: var(--text-xl);
     font-weight: var(--font-bold);
     color: var(--color-primary);
     line-height: var(--leading-tight);
@@ -210,7 +211,7 @@
     text-align: center;
 }
 
-/* ── Mobile adjustments ── */
+/* ── Mobile adjustments (< 768px only) ── */
 
 @media (max-width: 767px) {
     .stepTitle {
@@ -220,8 +221,96 @@
     .fieldsCard {
         padding: var(--space-6);
     }
+}
 
+/* ── Compact bottom bar (< 1024px) ── */
+
+@media (max-width: 1023px) {
+    /* Ensure form scrolls fully above the fixed bar */
+    .layout {
+        padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+    }
+
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        top: unset;
+        inset-inline: 0;
+        z-index: var(--z-raised);
+        padding-bottom: env(safe-area-inset-bottom);
+        border-top: 1px solid hsl(0 0% 100% / 0.08);
+    }
+
+    .sidebarSticky {
+        position: static;
+    }
+
+    /* Horizontal compact bar */
     .sidebarCard {
-        padding: var(--space-6);
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-4) var(--space-5);
+        border: none;
+        border-radius: 0;
+        overflow: visible; /* allow errorWrap to surface above */
+    }
+
+    /* Hide decorative / verbose elements in bar */
+    .sidebarHeading { display: none; }
+    .roomPreview    { display: none; }
+    .formHint       { display: none; }
+
+    /* Error banner floats above the bar */
+    .errorWrap {
+        position: absolute;
+        bottom: 100%;
+        inset-inline: 0;
+        padding: var(--space-3) var(--space-5);
+        background: var(--color-surface-container-low);
+        border-top: 1px solid hsl(0 0% 100% / 0.08);
+    }
+
+    /* Compact summary: column, left side, flex 1 */
+    .summaryDetails {
+        flex-direction: column;
+        flex: 1;
+        gap: var(--space-1);
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    /* Show Room (1st) + Total (4th) only — hide Date + Time */
+    /* .summaryDetails > :nth-child(2),
+    .summaryDetails > :nth-child(3) {
+        display: none;
+    } */
+
+    .summaryRow {
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: flex-start;
+        gap: var(--space-2);
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .summaryVal {
+        text-align: left;
+        font-size: var(--text-xs);
+        /* overflow: hidden;
+        text-overflow: ellipsis; */
+        white-space: pre-wrap;
+        min-width: 0;
+    }
+
+    /* Button container — fixed width so button doesn't stretch */
+    .submitWrap {
+        flex-shrink: 0;
+        width: clamp(9rem, 36vw, 11rem);
+    }
+
+    .confirm_button{
+        white-space: pre-wrap;
     }
 }

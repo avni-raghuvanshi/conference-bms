@@ -17,7 +17,6 @@
         transform var(--transition-fast),
         opacity var(--transition-fast);
     position: relative;
-    white-space: nowrap;
     text-decoration: none;
     user-select: none;
 }
@@ -112,6 +111,7 @@
 
 .fullWidth {
     width: 100%;
+    white-space: nowrap;
 }
 
 /* ── Spinner overlay ── */
@@ -126,4 +126,11 @@
 
 .hiddenText {
     visibility: hidden;
+}
+
+@media (max-width: 767px) {
+    .lg{
+        height: unset;
+        padding: var(--space-2) var(--space-5);
+    }
 }

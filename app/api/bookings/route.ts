@@ -11,10 +11,16 @@ const VALID_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_ATTENDEES = 50;
 const MAX_TITLE_LENGTH = 120;
 
-// Valid slot pairs derived from BASE_SLOTS — rejects arbitrary times
-const VALID_SLOT_PAIRS = new Set(
-    BASE_SLOTS.map((s) => `${s.startTime}|${s.endTime}`),
-);
+const REF_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+function generateBookingRef(): string {
+    let ref = 'CONF-';
+    for (let i = 0; i < 4; i++) ref += REF_CHARS[Math.floor(Math.random() * REF_CHARS.length)];
+    return ref;
+}
+
+const VALID_SLOT_PAIRS = new Set(BASE_SLOTS.map((s) => `${s.startTime}|${s.endTime}`));
+const SLOT_BY_ID = new Map(BASE_SLOTS.map((s) => [s.id, s]));
 
 // POST /api/bookings
 // Body: BookingPayload
@@ -34,13 +40,38 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'roomId, date, startTime, and endTime are required.' }, { status: 400 });
     }
 
-    // Validate date format (YYYY-MM-DD) — prevents arbitrary strings reaching the DB
+    // Validate date format (YYYY-MM-DD)
     if (!/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
         return NextResponse.json({ error: 'Invalid date format.' }, { status: 400 });
     }
 
-    // Validate startTime/endTime against known slot pairs — blocks arbitrary time injection
-    if (!VALID_SLOT_PAIRS.has(`${payload.startTime}|${payload.endTime}`)) {
+    // Validate each slotId exists, slots are consecutive, and derived times match
+    const slotIds = payload.slotIds ?? [];
+    if (slotIds.length === 0) {
+        return NextResponse.json({ error: 'At least one time slot is required.' }, { status: 400 });
+    }
+    if (slotIds.length > 5) {
+        return NextResponse.json({ error: 'Maximum 5 consecutive slots allowed.' }, { status: 400 });
+    }
+    const resolvedSlots = slotIds.map((id) => SLOT_BY_ID.get(id));
+    if (resolvedSlots.some((s) => !s)) {
+        return NextResponse.json({ error: 'One or more slot IDs are invalid.' }, { status: 400 });
+    }
+    // Verify slots are consecutive (endTime[i] === startTime[i+1])
+    for (let i = 0; i < resolvedSlots.length - 1; i++) {
+        if (resolvedSlots[i]!.endTime !== resolvedSlots[i + 1]!.startTime) {
+            return NextResponse.json({ error: 'Selected slots must be consecutive.' }, { status: 400 });
+        }
+    }
+    // Verify derived startTime/endTime match what the client sent
+    if (
+        resolvedSlots[0]!.startTime !== payload.startTime ||
+        resolvedSlots[resolvedSlots.length - 1]!.endTime !== payload.endTime
+    ) {
+        return NextResponse.json({ error: 'Invalid time slot.' }, { status: 400 });
+    }
+    // Each individual slot pair must be in VALID_SLOT_PAIRS
+    if (resolvedSlots.some((s) => !VALID_SLOT_PAIRS.has(`${s!.startTime}|${s!.endTime}`))) {
         return NextResponse.json({ error: 'Invalid time slot.' }, { status: 400 });
     }
 
@@ -110,23 +141,25 @@ export async function POST(request: NextRequest) {
     // so two simultaneous requests for the same slot queue rather than double-book.
     try {
         const booking = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-            // Lock any existing booking for this slot
+            // Lock any overlapping booking — catches both single and multi-slot conflicts
             const existing = await tx.$queryRaw<{ id: string }[]>`
                 SELECT id FROM "Booking"
                 WHERE "roomId" = ${payload.roomId}
                   AND date = ${payload.date}
-                  AND "startTime" = ${payload.startTime}
+                  AND "startTime" < ${payload.endTime}
+                  AND "endTime" > ${payload.startTime}
                   AND status = 'CONFIRMED'
                 FOR UPDATE
             `;
 
             if (existing.length > 0) {
-                throw new SlotConflictError('This time slot was just booked by someone else. Please choose a different slot.');
+                throw new SlotConflictError('One or more of the selected slots is already booked. Please choose different times.');
             }
 
             // Create the booking
             const created = await tx.booking.create({
                 data: {
+                    ref: generateBookingRef(),
                     roomId: payload.roomId!,
                     date: payload.date!,
                     startTime: payload.startTime!,
@@ -175,16 +208,20 @@ export async function POST(request: NextRequest) {
         }
 
         // Send confirmation email (non-critical — booking already confirmed)
+        const RATE_PER_HOUR = 4500;
+        const durationHours = slotIds.length;
+
         try {
             await sendBookingConfirmationEmail({
                 to: [organizerEmail, ...booking.attendees],
-                bookingId: booking.id,
+                bookingRef: booking.ref ?? booking.id,
                 title: booking.title,
                 roomName: room.name,
                 floor: room.floor,
                 date: booking.date,
                 startTime: booking.startTime,
                 endTime: booking.endTime,
+                totalAmount: durationHours * RATE_PER_HOUR,
                 organizerEmail,
                 attendees: booking.attendees,
                 meetLink,

@@ -6,11 +6,13 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import styles from './TimeSlotPicker.module.css';
 import { TimeSlot } from '@/lib/types';
 
+const MAX_SLOTS = 5;
+
 interface TimeSlotPickerProps {
     roomId: string | null;
     date: string;
-    selectedSlotId: string | null;
-    onSelect: (slot: TimeSlot) => void;
+    selectedSlotIds: string[];
+    onSelect: (slots: TimeSlot[]) => void;
     error?: string;
 }
 
@@ -24,7 +26,7 @@ function formatTime(time: string): string {
 export default function TimeSlotPicker({
     roomId,
     date,
-    selectedSlotId,
+    selectedSlotIds,
     onSelect,
     error,
 }: TimeSlotPickerProps) {
@@ -67,6 +69,64 @@ export default function TimeSlotPicker({
 
     const allBooked = slots.every((s) => !s.available);
 
+    function handleSlotClick(clickedSlot: TimeSlot) {
+        if (!clickedSlot.available) return;
+
+        const clickedIndex = slots.findIndex((s) => s.id === clickedSlot.id);
+        const selectedIndices = selectedSlotIds
+            .map((id) => slots.findIndex((s) => s.id === id))
+            .filter((i) => i !== -1)
+            .sort((a, b) => a - b);
+
+        // Nothing selected yet — start fresh
+        if (selectedIndices.length === 0) {
+            onSelect([clickedSlot]);
+            return;
+        }
+
+        const firstIdx = selectedIndices[0];
+        const lastIdx = selectedIndices[selectedIndices.length - 1];
+
+        // Clicking the only selected slot deselects it
+        if (selectedIndices.length === 1 && clickedIndex === firstIdx) {
+            onSelect([]);
+            return;
+        }
+
+        // Clicked adjacent to the start — extend backwards
+        if (clickedIndex === firstIdx - 1) {
+            if (selectedIndices.length >= MAX_SLOTS) return;
+            const newSlots = slots.slice(clickedIndex, lastIdx + 1).filter((s) => s.available);
+            if (newSlots.length === lastIdx - clickedIndex + 1) {
+                onSelect(newSlots);
+            } else {
+                onSelect([clickedSlot]); // gap found — reset to just this slot
+            }
+            return;
+        }
+
+        // Clicked adjacent to the end — extend forwards
+        if (clickedIndex === lastIdx + 1) {
+            if (selectedIndices.length >= MAX_SLOTS) return;
+            const newSlots = slots.slice(firstIdx, clickedIndex + 1).filter((s) => s.available);
+            if (newSlots.length === clickedIndex - firstIdx + 1) {
+                onSelect(newSlots);
+            } else {
+                onSelect([clickedSlot]);
+            }
+            return;
+        }
+
+        // Clicked within selection — trim to clicked position
+        if (clickedIndex >= firstIdx && clickedIndex <= lastIdx) {
+            onSelect(slots.slice(firstIdx, clickedIndex + 1));
+            return;
+        }
+
+        // Non-adjacent click — reset to this slot
+        onSelect([clickedSlot]);
+    }
+
     return (
         <div>
             {allBooked && (
@@ -77,25 +137,34 @@ export default function TimeSlotPicker({
 
             <div
                 className={styles.list}
-                role="radiogroup"
-                aria-label="Available time slots"
+                role="group"
+                aria-label="Available time slots — select consecutive slots"
             >
                 {slots.map((slot) => {
-                    const isSelected = slot.id === selectedSlotId;
+                    const isSelected = selectedSlotIds.includes(slot.id);
+                    const selectedIndices = selectedSlotIds
+                        .map((id) => slots.findIndex((s) => s.id === id))
+                        .filter((i) => i !== -1)
+                        .sort((a, b) => a - b);
+                    const slotIndex = slots.findIndex((s) => s.id === slot.id);
+                    const isFirst = isSelected && slotIndex === selectedIndices[0];
+                    const isLast = isSelected && slotIndex === selectedIndices[selectedIndices.length - 1];
+
                     return (
                         <button
                             key={slot.id}
                             type="button"
-                            role="radio"
-                            aria-checked={isSelected}
+                            aria-pressed={isSelected}
                             disabled={!slot.available}
-                            onClick={() => slot.available && onSelect(slot)}
+                            onClick={() => handleSlotClick(slot)}
                             className={[
                                 styles.slot,
                                 !slot.available && styles.slotBooked,
                                 isSelected && styles.slotSelected,
+                                isSelected && isFirst && styles.slotFirst,
+                                isSelected && isLast && styles.slotLast,
                             ].filter(Boolean).join(' ')}
-                            aria-label={`${formatTime(slot.startTime)} to ${formatTime(slot.endTime)}${!slot.available ? ' – unavailable' : ''}`}
+                            aria-label={`${formatTime(slot.startTime)} to ${formatTime(slot.endTime)}${!slot.available ? ' – unavailable' : isSelected ? ' – selected' : ''}`}
                         >
                             <span className={styles.slotTime}>
                                 {formatTime(slot.startTime)} — {formatTime(slot.endTime)}
@@ -107,6 +176,10 @@ export default function TimeSlotPicker({
                     );
                 })}
             </div>
+
+            {selectedSlotIds.length >= MAX_SLOTS && (
+                <p className={styles.maxNote}>Maximum {MAX_SLOTS} hours selected.</p>
+            )}
 
             {error && (
                 <p className={styles.error} role="alert">{error}</p>
