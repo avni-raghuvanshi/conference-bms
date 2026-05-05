@@ -32,10 +32,11 @@ model Room {
   name        String
   slug        String   @unique
   capacity    Int
-  floor       Int
-  amenities   String[]
+  hasAV       Boolean  @default(false)
   imageUrl    String
   description String
+  priceMin    Int      @default(0)
+  priceMax    Int      @default(0)
   createdAt   DateTime @default(now())
 }
 

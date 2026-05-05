@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { BASE_SLOTS } from '@/lib/rooms';
+import { BASE_SLOTS, isPeakHour } from '@/lib/rooms';
 import { TimeSlot } from '@/lib/types';
 
 // GET /api/rooms/[id]/slots?date=YYYY-MM-DD
-// Returns all time slots for a room/date with real availability from the DB.
+// Returns all time slots for a room/date with availability and peak-hour pricing.
 export async function GET(
     request: NextRequest,
     { params }: { params: { id: string } },
@@ -19,17 +19,25 @@ export async function GET(
         );
     }
 
-    // Fetch all confirmed bookings for this room+date in one query
-    const bookedSlots = await prisma.booking.findMany({
-        where: { roomId, date, status: 'CONFIRMED' },
-        select: { startTime: true },
-    });
+    const [room, bookedSlots] = await Promise.all([
+        prisma.room.findUnique({ where: { id: roomId } }),
+        prisma.booking.findMany({
+            where: { roomId, date, status: 'CONFIRMED' },
+            select: { startTime: true },
+        }),
+    ]);
+
+    if (!room) {
+        return NextResponse.json({ error: 'Room not found.' }, { status: 404 });
+    }
 
     const bookedStartTimes = new Set(bookedSlots.map((b) => b.startTime));
 
     const slots: TimeSlot[] = BASE_SLOTS.map((slot) => ({
         ...slot,
         available: !bookedStartTimes.has(slot.startTime),
+        isPeakHour: isPeakHour(slot.startTime),
+        price: isPeakHour(slot.startTime) ? room.priceMax : room.priceMin,
     }));
 
     return NextResponse.json(slots);

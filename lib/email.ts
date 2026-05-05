@@ -9,7 +9,6 @@ interface BookingConfirmationInput {
     bookingRef: string;
     title: string;
     roomName: string;
-    floor: number;
     date: string;       // "YYYY-MM-DD"
     startTime: string;  // "HH:MM"
     endTime: string;    // "HH:MM"
@@ -58,7 +57,7 @@ export async function sendBookingConfirmationEmail(input: BookingConfirmationInp
             <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
                 <tr>
                     <td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;width:120px;">Room</td>
-                    <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:14px;font-weight:600;">${input.roomName} <span style="font-weight:400;color:#888;">· Floor ${input.floor}</span></td>
+                    <td style="padding:10px 0;border-bottom:1px solid #eee;font-size:14px;font-weight:600;">${input.roomName}</td>
                 </tr>
                 <tr>
                     <td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Date</td>
