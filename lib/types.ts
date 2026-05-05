@@ -3,10 +3,11 @@ export interface Room {
     name: string;
     slug: string;
     capacity: number;
-    floor: number;
-    amenities: string[];
+    hasAV: boolean;
     imageUrl: string;
     description: string;
+    priceMin: number;
+    priceMax: number;
 }
 
 export interface TimeSlot {
@@ -14,6 +15,8 @@ export interface TimeSlot {
     startTime: string; // "HH:MM"
     endTime: string;   // "HH:MM"
     available: boolean;
+    price: number;
+    isPeakHour: boolean;
 }
 
 export interface BookingPayload {

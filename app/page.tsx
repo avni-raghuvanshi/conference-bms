@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { prisma } from '@/lib/db';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -9,40 +10,15 @@ export const metadata: Metadata = {
         'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
 };
 
-const SPACES = [
-    {
-        number: '01',
-        label: 'Executive Suite',
-        name: 'Alpha Suite',
-        description:
-            'Seats 12. Ideal for board meetings, strategy sessions, and client presentations. Includes display screen and conferencing setup.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',
-        specs: ['12 PERSONS', '4K DISPLAY', 'CONFERENCING'],
-    },
-    {
-        number: '02',
-        label: 'Grand Forum',
-        name: 'Gamma Hall',
-        description:
-            'Seats up to 30. Large conference hall with projection screen. Suited for training, seminars, and team meetings.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80',
-        specs: ['30 PERSONS', 'PROJECTION SCREEN', 'BREAKOUT AREAS'],
-    },
-    {
-        number: '03',
-        label: 'Focus Cell',
-        name: 'Delta Pod',
-        description:
-            'Seats 4. Private room for client meetings, interviews, and focused discussions.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1200&q=80',
-        specs: ['4 PERSONS', 'PRIVATE', 'SOUNDPROOFED'],
-    },
-];
+function getRoomLabel(capacity: number): string {
+    if (capacity >= 20) return 'Conference Hall';
+    if (capacity >= 12) return 'Executive Suite';
+    if (capacity >= 8) return 'Meeting Room';
+    return 'Focus Room';
+}
 
-export default function HomePage() {
+export default async function HomePage() {
+    const rooms = await prisma.room.findMany({ orderBy: { capacity: 'desc' } });
     return (
         <>
             <main>
@@ -300,62 +276,69 @@ export default function HomePage() {
                         </header>
 
                         <div className={styles.spacesList}>
-                            {SPACES.map((space, i) => (
-                                <article
-                                    key={space.name}
-                                    className={`${styles.spaceItem} ${i % 2 === 1 ? styles.spaceItemReverse : ''}`}
-                                >
-                                    <div className={styles.spaceImageWrapper}>
-                                        <Image
-                                            src={space.imageUrl}
-                                            alt={space.name}
-                                            fill
-                                            className={styles.spaceImage}
-                                            sizes="(max-width: 1024px) 100vw, 66vw"
-                                        />
-                                        <div
-                                            className={styles.spaceImageOverlay}
-                                            aria-hidden="true"
-                                        />
-                                        <span
-                                            className={styles.spaceNumber}
-                                            aria-hidden="true"
-                                        >
-                                            {space.number} — {space.label.toUpperCase()}
-                                        </span>
-                                    </div>
-                                    <div className={styles.spaceInfo}>
-                                        <h3 className={styles.spaceName}>{space.name}</h3>
-                                        <p className={styles.spaceDesc}>{space.description}</p>
-                                        <ul
-                                            className={styles.spaceSpecs}
-                                            aria-label="Specifications"
-                                        >
-                                            {space.specs.map((spec) => (
-                                                <li key={spec}>{spec}</li>
-                                            ))}
-                                        </ul>
-                                        <Link href="/booking" className={styles.spaceLink}>
-                                            Book This Room
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                                width="14"
-                                                height="14"
+                            {rooms.map((room, i) => {
+                                const specs = [
+                                    `${room.capacity} PERSONS`,
+                                    room.hasAV ? 'AUDIO / VIDEO' : 'NO A/V',
+                                    `FROM ₹${room.priceMin.toLocaleString('en-IN')} / HR`,
+                                ];
+                                return (
+                                    <article
+                                        key={room.id}
+                                        className={`${styles.spaceItem} ${i % 2 === 1 ? styles.spaceItemReverse : ''}`}
+                                    >
+                                        <div className={styles.spaceImageWrapper}>
+                                            <Image
+                                                src={room.imageUrl}
+                                                alt={room.name}
+                                                fill
+                                                className={styles.spaceImage}
+                                                sizes="(max-width: 1024px) 100vw, 66vw"
+                                            />
+                                            <div
+                                                className={styles.spaceImageOverlay}
+                                                aria-hidden="true"
+                                            />
+                                            <span
+                                                className={styles.spaceNumber}
                                                 aria-hidden="true"
                                             >
-                                                <path
-                                                    d="M5 12h14M12 5l7 7-7 7"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </Link>
-                                    </div>
-                                </article>
-                            ))}
+                                                {String(i + 1).padStart(2, '0')} — {getRoomLabel(room.capacity).toUpperCase()}
+                                            </span>
+                                        </div>
+                                        <div className={styles.spaceInfo}>
+                                            <h3 className={styles.spaceName}>{room.name}</h3>
+                                            <p className={styles.spaceDesc}>{room.description}</p>
+                                            <ul
+                                                className={styles.spaceSpecs}
+                                                aria-label="Specifications"
+                                            >
+                                                {specs.map((spec) => (
+                                                    <li key={spec}>{spec}</li>
+                                                ))}
+                                            </ul>
+                                            <Link href="/booking" className={styles.spaceLink}>
+                                                Book This Room
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="1.5"
+                                                    width="14"
+                                                    height="14"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M5 12h14M12 5l7 7-7 7"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </Link>
+                                        </div>
+                                    </article>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>

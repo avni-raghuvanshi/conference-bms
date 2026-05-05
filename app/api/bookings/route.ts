@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/db';
 import { verifyOtpToken } from '@/lib/jwt';
-import { BASE_SLOTS } from '@/lib/rooms';
+import { BASE_SLOTS, isPeakHour } from '@/lib/rooms';
 import { createCalendarEvent } from '@/lib/calendar';
 import { sendBookingConfirmationEmail } from '@/lib/email';
 import { BookingPayload } from '@/lib/types';
@@ -208,8 +208,10 @@ export async function POST(request: NextRequest) {
         }
 
         // Send confirmation email (non-critical — booking already confirmed)
-        const RATE_PER_HOUR = 4500;
-        const durationHours = slotIds.length;
+        const totalAmount = resolvedSlots.reduce(
+            (sum, slot) => sum + (isPeakHour(slot!.startTime) ? room.priceMax : room.priceMin),
+            0,
+        );
 
         try {
             await sendBookingConfirmationEmail({
@@ -217,11 +219,10 @@ export async function POST(request: NextRequest) {
                 bookingRef: booking.ref ?? booking.id,
                 title: booking.title,
                 roomName: room.name,
-                floor: room.floor,
                 date: booking.date,
                 startTime: booking.startTime,
                 endTime: booking.endTime,
-                totalAmount: durationHours * RATE_PER_HOUR,
+                totalAmount,
                 organizerEmail,
                 attendees: booking.attendees,
                 meetLink,

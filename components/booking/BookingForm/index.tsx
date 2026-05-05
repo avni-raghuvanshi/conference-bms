@@ -15,7 +15,6 @@ import styles from './BookingForm.module.css';
 import { Room, TimeSlot, BookingPayload } from '@/lib/types';
 import { checkUser, sendOtp, getBookedDates, createBooking } from '@/lib/api';
 
-const RATE_PER_HOUR = 4500;
 
 interface FormErrors {
     room?: string;
@@ -202,7 +201,7 @@ export default function BookingForm() {
     const firstSlot = selectedSlots[0] ?? null;
     const lastSlot = selectedSlots[selectedSlots.length - 1] ?? null;
     const totalHours = selectedSlots.length;
-    const totalAmount = totalHours * RATE_PER_HOUR;
+    const totalAmount = selectedSlots.reduce((sum, s) => sum + s.price, 0);
 
     const isFormValid =
         !!selectedRoom && !!date && selectedSlots.length > 0 &&
@@ -366,7 +365,7 @@ export default function BookingForm() {
                                         <dt className={styles.summaryKey}>Total</dt>
                                         <dd className={styles.summaryVal}>
                                             {totalHours > 0
-                                                ? `${totalHours} hr × ₹${RATE_PER_HOUR.toLocaleString('en-IN')} = ₹${totalAmount.toLocaleString('en-IN')}`
+                                                ? `₹${totalAmount.toLocaleString('en-IN')} for ${totalHours} hr`
                                                 : '—'}
                                         </dd>
                                     </div>

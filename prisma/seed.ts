@@ -4,55 +4,54 @@ const prisma = new PrismaClient();
 
 const rooms = [
     {
-        id: 'room-alpha',
-        name: 'Alpha Suite',
-        slug: 'alpha-suite',
-        capacity: 12,
-        floor: 3,
-        amenities: ['4K Display', 'Video Conferencing', 'Whiteboard', 'Sound System'],
-        imageUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
-        description: 'Spacious executive suite with panoramic city views, perfect for high-level meetings and presentations.',
-    },
-    {
-        id: 'room-beta',
-        name: 'Beta Lab',
-        slug: 'beta-lab',
-        capacity: 6,
-        floor: 2,
-        amenities: ['Dual Monitors', 'Whiteboard', 'High-Speed Wi-Fi'],
-        imageUrl: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80',
-        description: 'A collaborative workspace designed for small teams, brainstorming, and agile standups.',
-    },
-    {
-        id: 'room-gamma',
-        name: 'Gamma Hall',
-        slug: 'gamma-hall',
-        capacity: 30,
-        floor: 5,
-        amenities: ['Projector', 'Stage', 'Microphones', 'Video Recording', 'Breakout Areas'],
+        id: 'room-orbit',
+        name: 'Orbit',
+        slug: 'orbit',
+        capacity: 22,
+        hasAV: true,
         imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
-        description: 'A large event hall suitable for all-hands meetings, workshops, and company-wide presentations.',
+        description: 'Seats 22. Conference room with full audio/video setup. Suited for presentations, team meetings, and workshops.',
+        priceMin: 2200,
+        priceMax: 3000,
     },
     {
-        id: 'room-delta',
-        name: 'Delta Pod',
-        slug: 'delta-pod',
-        capacity: 4,
-        floor: 1,
-        amenities: ['Smart TV', 'Whiteboard'],
+        id: 'room-huddle',
+        name: 'Huddle',
+        slug: 'huddle',
+        capacity: 15,
+        hasAV: true,
+        imageUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
+        description: 'Seats 15. Meeting room with display screen and video conferencing. Good for client meetings and team sessions.',
+        priceMin: 2000,
+        priceMax: 2500,
+    },
+    {
+        id: 'room-sync',
+        name: 'Sync',
+        slug: 'sync',
+        capacity: 8,
+        hasAV: false,
+        imageUrl: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80',
+        description: 'Seats 8. Quiet room for focused discussions, strategy sessions, and small-group work.',
+        priceMin: 1800,
+        priceMax: 2000,
+    },
+    {
+        id: 'room-loop',
+        name: 'Loop',
+        slug: 'loop',
+        capacity: 8,
+        hasAV: false,
         imageUrl: 'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&q=80',
-        description: 'A cozy focus room ideal for quick syncs, 1:1s, and confidential conversations.',
+        description: 'Seats 8. Compact room for 1:1s, interviews, and short team syncs.',
+        priceMin: 1800,
+        priceMax: 2000,
     },
 ];
 
 async function main() {
-    for (const room of rooms) {
-        await prisma.room.upsert({
-            where: { id: room.id },
-            update: room,
-            create: room,
-        });
-    }
+    await prisma.room.deleteMany({});
+    await prisma.room.createMany({ data: rooms });
     console.log(`Seeded ${rooms.length} rooms.`);
 }
 
