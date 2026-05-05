@@ -1,0 +1,43 @@
+steps:
+  # 1. Build the Docker image — prisma generate needs no DB connection, no build args needed
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/conference-bms:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/conference-bms:latest'
+      - '.'
+
+  # 2. Push to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - push
+      - '--all-tags'
+      - 'gcr.io/$PROJECT_ID/conference-bms'
+
+  # 3. Deploy to Cloud Run — secrets are injected at runtime by Cloud Run, not at build time
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'conference-bms'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/conference-bms:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--service-account'
+      - 'conferra-bms@conferra-bms.iam.gserviceaccount.com'
+      - '--set-secrets'
+      - 'DATABASE_URL=DATABASE_URL:latest,JWT_SECRET=JWT_SECRET:latest,INTERNAL_CRON_SECRET=INTERNAL_CRON_SECRET:latest,RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_SERVICE_ACCOUNT_EMAIL=GOOGLE_SERVICE_ACCOUNT_EMAIL:latest,GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY=GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY:latest,GOOGLE_CALENDAR_IMPERSONATE_EMAIL=GOOGLE_CALENDAR_IMPERSONATE_EMAIL:latest'
+      - '--allow-unauthenticated'
+
+images:
+  - 'gcr.io/$PROJECT_ID/conference-bms:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/conference-bms:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
