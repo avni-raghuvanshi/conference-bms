@@ -101,6 +101,18 @@
     text-decoration: none;
 }
 
+.audioVideo{
+    position: relative;
+}
+.audioVideo::after{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    content: "";
+    inset: 0;
+    background: #0909092d;
+}
+
 .ctaSecondary {
     display: inline-flex;
     align-items: center;

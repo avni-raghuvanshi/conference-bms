@@ -15,8 +15,8 @@ export const BASE_SLOTS: Array<Pick<TimeSlot, 'id' | 'startTime' | 'endTime'>> =
     { id: 'slot-12', startTime: '20:00', endTime: '21:00' },
 ];
 
-// Peak hours: 12pm–4pm (slots starting at 12:00, 13:00, 14:00, 15:00)
+// Peak hours: 12pm–4pm and 7pm–9pm (last 2 slots of the day)
 export function isPeakHour(startTime: string): boolean {
     const hour = parseInt(startTime, 10);
-    return hour >= 12 && hour < 16;
+    return (hour >= 12 && hour < 16) || hour >= 19;
 }

@@ -149,7 +149,7 @@ export default async function HomePage() {
                             </article>
 
                             {/* Audio/Video Conferencing */}
-                            <article className={`${styles.bentoCard} ${styles.bentoCentered}`}>
+                            <article className={`${styles.bentoCard} ${styles.bentoCentered} ${styles.audioVideo}`}>
                                 <div className={styles.bentoIcon} aria-hidden="true">
                                     <svg
                                         viewBox="0 0 24 24"
@@ -276,11 +276,11 @@ export default async function HomePage() {
                         </header>
 
                         <div className={styles.spacesList}>
-                            {rooms.map((room, i) => {
+                            {rooms?.map((room, i) => {
                                 const specs = [
                                     `${room.capacity} PERSONS`,
-                                    room.hasAV ? 'AUDIO / VIDEO' : 'NO A/V',
-                                    `FROM ₹${room.priceMin.toLocaleString('en-IN')} / HR`,
+                                    // room?.hasAV ? 'AUDIO / VIDEO' : 'NO A/V',
+                                    `FROM ₹${room?.priceMin?.toLocaleString('en-IN')} / HR`,
                                 ];
                                 return (
                                     <article
