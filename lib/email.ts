@@ -1,8 +1,10 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = process.env.RESEND_FROM_EMAIL ?? 'reservations@conferra.co';
+
+function getResend() {
+    return new Resend(process.env.RESEND_API_KEY);
+}
 
 interface BookingConfirmationInput {
     to: string[];
@@ -94,7 +96,7 @@ export async function sendBookingConfirmationEmail(input: BookingConfirmationInp
         </div>
     `;
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResend().emails.send({
         from: `Conferra <${FROM}>`,
         to: allRecipients,
         subject: `Booking Confirmed — ${input.roomName}, ${formatDate(input.date)}`,
@@ -105,7 +107,7 @@ export async function sendBookingConfirmationEmail(input: BookingConfirmationInp
 }
 
 export async function sendOtpEmail(to: string, otp: string): Promise<void> {
-    const { error } = await resend.emails.send({
+    const { error } = await getResend().emails.send({
         from: `Conferra <${FROM}>`,
         to,
         subject: `${otp} — Your Conferra verification code`,
