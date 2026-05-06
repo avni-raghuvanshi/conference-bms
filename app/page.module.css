@@ -102,15 +102,19 @@
 }
 
 .audioVideo{
-    position: relative;
+    cursor: not-allowed;
 }
-.audioVideo::after{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    content: "";
-    inset: 0;
-    background: #0909092d;
+
+.audioVideo > .label{
+    font-size: 14px;
+    background-color: #000;
+    padding: 2px 5px;
+}
+.audioVideo > .bentoIcon{
+    opacity: 0.2;
+}
+.audioVideo > .cardContent{
+    opacity: 0.2;
 }
 
 .ctaSecondary {
@@ -507,12 +511,29 @@
     }
 
     .spaceItem {
-        flex: 0 0 85vw;
+        flex: 0 0 63vw;
         scroll-snap-align: start;
         display: flex;
         flex-direction: column;
         gap: var(--space-4);
     }
+
+    .spaceName {
+        font-size: var(--text-3xl) !important;
+        margin-bottom: var(--space-3) !important;
+    }
+
+    .spaceDesc{
+        font-size: var(--text-base);
+    }
+}
+
+.spaceName {
+    font-family: var(--font-serif);
+    font-size: var(--text-5xl);
+    color: var(--color-on-surface);
+    margin-bottom: var(--space-8);
+    letter-spacing: -0.01em;
 }
 
 .spaceItem {

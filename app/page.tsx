@@ -150,6 +150,7 @@ export default async function HomePage() {
 
                             {/* Audio/Video Conferencing */}
                             <article className={`${styles.bentoCard} ${styles.bentoCentered} ${styles.audioVideo}`}>
+                                <span className={styles.label}>Coming Soon</span>
                                 <div className={styles.bentoIcon} aria-hidden="true">
                                     <svg
                                         viewBox="0 0 24 24"
@@ -166,7 +167,7 @@ export default async function HomePage() {
                                         />
                                     </svg>
                                 </div>
-                                <div>
+                                <div className={styles.cardContent}>
                                     <h3 className={styles.bentoTitle}>Audio/Video Conferencing</h3>
                                     <p className={styles.bentoDesc}>
                                         Display screen, camera, and conferencing system included
@@ -299,12 +300,12 @@ export default async function HomePage() {
                                                 className={styles.spaceImageOverlay}
                                                 aria-hidden="true"
                                             />
-                                            <span
+                                            {/* <span
                                                 className={styles.spaceNumber}
                                                 aria-hidden="true"
                                             >
                                                 {String(i + 1).padStart(2, '0')} — {getRoomLabel(room.capacity).toUpperCase()}
-                                            </span>
+                                            </span> */}
                                         </div>
                                         <div className={styles.spaceInfo}>
                                             <h3 className={styles.spaceName}>{room.name}</h3>
