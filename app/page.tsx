@@ -5,9 +5,9 @@ import { prisma } from '@/lib/db';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-    title: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
+    title: 'Conferra — Meeting Rooms in East of Kailash, Delhi',
     description:
-        'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
+        'Private meeting rooms in East of Kailash, Delhi. Book by the hour.',
 };
 
 function getRoomLabel(capacity: number): string {
@@ -27,7 +27,7 @@ export default async function HomePage() {
                     <div className={styles.heroImageWrapper}>
                         <Image
                             src="https://res.cloudinary.com/doggeavv4/image/upload/v1774977603/hero_image_hskvjv.webp"
-                            alt="Conferra boardroom — a modern, dark-themed meeting space with architectural lighting"
+                            alt="Conferra"
                             fill
                             priority
                             className={styles.heroImage}

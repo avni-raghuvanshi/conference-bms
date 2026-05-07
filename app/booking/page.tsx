@@ -5,11 +5,11 @@ import styles from './page.module.css';
 export const metadata: Metadata = {
     title: 'Book a Meeting Room',
     description:
-        'Reserve a meeting room in GK II, New Delhi. Select a room, pick a date, choose a time slot, and confirm in seconds.',
+        'Reserve a meeting room in East of Kailash, New Delhi. Select a room, pick a date, choose a time slot, and confirm in seconds.',
     openGraph: {
         title: 'Book a Meeting Room | Conferra',
         description:
-            'Reserve a private meeting room in Greater Kailash II. Real-time availability.',
+            'Reserve a private meeting room in Delhi. Real-time availability.',
     },
 };
 
