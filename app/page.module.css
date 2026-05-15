@@ -101,22 +101,6 @@
     text-decoration: none;
 }
 
-.audioVideo{
-    cursor: not-allowed;
-}
-
-.audioVideo > .label{
-    font-size: 14px;
-    background-color: #000;
-    padding: 2px 5px;
-}
-.audioVideo > .bentoIcon{
-    opacity: 0.2;
-}
-.audioVideo > .cardContent{
-    opacity: 0.2;
-}
-
 .ctaSecondary {
     display: inline-flex;
     align-items: center;
@@ -559,38 +543,22 @@
 
 .spaceImageWrapper {
     position: relative;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 9 / 6;
     overflow: hidden;
 }
 
 .spaceImage {
     object-fit: cover;
-    filter: grayscale(1) brightness(0.75);
+    object-position: center 62%;
     scale: 1.01;
     transition:
-        filter var(--transition-slow-ease),
-        brightness var(--transition-slow-ease),
         scale var(--transition-slow-ease);
 }
 
 .spaceImageWrapper:hover .spaceImage {
-    filter: grayscale(0) brightness(1);
     scale: 1;
 }
 
-.spaceImageOverlay {
-    position: absolute;
-    inset: 0;
-    background: hsl(168 20% 72% / 0.1);
-    opacity: 0;
-    transition: opacity var(--transition-slow-ease);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.spaceImageWrapper:hover .spaceImageOverlay {
-    opacity: 1;
-}
 
 .spaceNumber {
     position: absolute;

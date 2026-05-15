@@ -62,7 +62,7 @@ export default function BookingForm() {
     const [title, setTitle] = useState('');
     const [email, setEmail] = useState('');
     const [attendees, setAttendees] = useState<string[]>([]);
-    // const [avSelected, setAvSelected] = useState(false);
+    const [avSelected, setAvSelected] = useState(false);
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [submitting, setSubmitting] = useState(false);
@@ -246,19 +246,22 @@ export default function BookingForm() {
                                 <p className={styles.fieldError} role="alert">{errors.room}</p>
                             )}
 
-                            {/* A/V add-on checkbox — uncomment to enable
-                            {selectedRoom?.hasAV && (
-                                <label className={styles.avAddon}>
-                                    <input
-                                        type="checkbox"
-                                        checked={avSelected}
-                                        onChange={(e) => setAvSelected(e.target.checked)}
-                                    />
-                                    Add A/V equipment setup
-                                    <span className={styles.avAddonPrice}>+₹1,000</span>
-                                </label>
-                            )}
-                            */}
+                            <div className={styles["optionsContainer"]}>
+                                {selectedRoom?.hasAV && (
+                                    <label className={styles.checkLabel}>
+                                        <input
+                                            className={styles.checkInput}
+                                            type="checkbox"
+                                            checked={avSelected}
+                                            onChange={(e) => setAvSelected(e.target.checked)}
+                                        />
+                                        Add A/V equipment setup
+                                        <span className={styles.checkPrice}>+₹1,000</span>
+                                    </label>
+                                )}
+                            </div>
+                            
+                           
                         </section>
 
                         {/* Step 02 + 03 — Date & Time */}
@@ -387,14 +390,14 @@ export default function BookingForm() {
                                                 : '—'}
                                         </dd>
                                     </div>
-                                    {/* A/V add-on summary row — uncomment to enable
+                                   
                                     {avSelected && selectedRoom?.hasAV && (
                                         <div className={styles.summaryRow}>
                                             <dt className={styles.summaryKey}>A/V Setup</dt>
                                             <dd className={styles.summaryVal}>₹1,000</dd>
                                         </div>
                                     )}
-                                    */}
+                                   
                                 </dl>
 
                                 {submitError && (

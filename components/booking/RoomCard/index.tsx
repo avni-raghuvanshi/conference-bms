@@ -8,13 +8,6 @@ interface RoomCardProps {
     onSelect: (room: Room) => void;
 }
 
-function getRoomLabel(capacity: number): string {
-    if (capacity >= 20) return 'Grand Auditorium';
-    if (capacity >= 10) return 'Executive Suite';
-    if (capacity >= 6) return 'Studio';
-    return 'Focus Cell';
-}
-
 export default function RoomCard({ room, selected, onSelect }: RoomCardProps) {
     return (
         <button
@@ -42,7 +35,6 @@ export default function RoomCard({ room, selected, onSelect }: RoomCardProps) {
             <div className={styles.content}>
                 <div className={styles.top}>
                     <div className={styles.topRow}>
-                        <span className={styles.label}>{getRoomLabel(room.capacity)}</span>
                         {selected && (
                             <span className={styles.selectedBadge}>Selected</span>
                         )}

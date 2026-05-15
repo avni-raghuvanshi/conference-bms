@@ -24,15 +24,15 @@ export const metadata: Metadata = {
         template: '%s | Conferra',
     },
     description:
-        'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
-    keywords: ['conference room', 'meeting room', 'Greater Kailash', 'GK II', 'Delhi', 'book meeting room'],
+        'Private meeting rooms in Delhi. Audio/video conferencing included. Book by the hour.',
+    keywords: ['conference room', 'meeting room', 'arbitrations', 'East of Kailash', 'GK', 'Delhi', 'book meeting room'],
     openGraph: {
         type: 'website',
         locale: 'en_IN',
         siteName: 'Conferra',
         title: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
         description:
-            'Private meeting rooms in GK II, South Delhi. Audio/video conferencing included. Book by the hour.',
+            'Private meeting rooms in East of Kailash, Delhi. Audio/video conferencing included. Book by the hour.',
     },
 };
 
