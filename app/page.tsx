@@ -26,7 +26,7 @@ export default async function HomePage() {
                 <section className={styles.hero} aria-label="Hero">
                     <div className={styles.heroImageWrapper}>
                         <Image
-                            src="https://res.cloudinary.com/doggeavv4/image/upload/v1774977603/hero_image_hskvjv.webp"
+                            src="https://res.cloudinary.com/doggeavv4/image/upload/v1778870015/orbit_02_lytm8b.png"
                             alt="Conferra"
                             fill
                             priority
@@ -150,7 +150,6 @@ export default async function HomePage() {
 
                             {/* Audio/Video Conferencing */}
                             <article className={`${styles.bentoCard} ${styles.bentoCentered} ${styles.audioVideo}`}>
-                                <span className={styles.label}>Coming Soon</span>
                                 <div className={styles.bentoIcon} aria-hidden="true">
                                     <svg
                                         viewBox="0 0 24 24"
@@ -294,7 +293,7 @@ export default async function HomePage() {
                                                 alt={room.name}
                                                 fill
                                                 className={styles.spaceImage}
-                                                sizes="(max-width: 1024px) 100vw, 66vw"
+                                                sizes="(max-width: 1024px) 100vw, 46vw"
                                             />
                                             <div
                                                 className={styles.spaceImageOverlay}
