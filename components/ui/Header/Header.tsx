@@ -40,39 +40,41 @@ export default function Header() {
     }, [open]);
 
     return (
-        <header className={styles.header} role="banner">
-            <Link href="/" className={styles.logo} aria-label="Conferra — Return to home">
-                CONFERRA
-            </Link>
-
-            <nav className={styles.nav} aria-label="Primary navigation">
-                {NAV_LINKS.map(({ label, href }) => (
-                    <Link key={label} href={href} className={styles.navLink}>
-                        {label}
-                    </Link>
-                ))}
-            </nav>
-
-            <div className={styles.headerRight}>
-                <Link href="/booking" className={styles.bookButton}>
-                    BOOK NOW
+        <>
+            <header className={styles.header} role="banner">
+                <Link href="/" className={styles.logo} aria-label="Conferra — Return to home">
+                    CONFERRA
                 </Link>
 
-                <button
-                    type="button"
-                    className={styles.hamburger}
-                    aria-label={open ? 'Close menu' : 'Open menu'}
-                    aria-expanded={open}
-                    aria-controls="mobile-nav"
-                    onClick={() => setOpen((v) => !v)}
-                >
-                    <span className={`${styles.bar} ${open ? styles.barTopOpen : ''}`} />
-                    <span className={`${styles.bar} ${open ? styles.barMidOpen : ''}`} />
-                    <span className={`${styles.bar} ${open ? styles.barBotOpen : ''}`} />
-                </button>
-            </div>
+                <nav className={styles.nav} aria-label="Primary navigation">
+                    {NAV_LINKS.map(({ label, href }) => (
+                        <Link key={label} href={href} className={styles.navLink}>
+                            {label}
+                        </Link>
+                    ))}
+                </nav>
 
-            {/* Mobile drawer */}
+                <div className={styles.headerRight}>
+                    <Link href="/booking" className={styles.bookButton}>
+                        BOOK NOW
+                    </Link>
+
+                    <button
+                        type="button"
+                        className={styles.hamburger}
+                        aria-label={open ? 'Close menu' : 'Open menu'}
+                        aria-expanded={open}
+                        aria-controls="mobile-nav"
+                        onClick={() => setOpen((v) => !v)}
+                    >
+                        <span className={`${styles.bar} ${open ? styles.barTopOpen : ''}`} />
+                        <span className={`${styles.bar} ${open ? styles.barMidOpen : ''}`} />
+                        <span className={`${styles.bar} ${open ? styles.barBotOpen : ''}`} />
+                    </button>
+                </div>
+            </header>
+
+            {/* Mobile drawer — outside <header> so backdrop-filter doesn't create a new containing block */}
             <div
                 className={`${styles.overlay} ${open ? styles.overlayVisible : ''}`}
                 aria-hidden="true"
@@ -104,6 +106,6 @@ export default function Header() {
                     </Link>
                 </nav>
             </div>
-        </header>
+        </>
     );
 }

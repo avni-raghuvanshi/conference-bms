@@ -383,18 +383,18 @@ export default async function HomePage() {
                             <p className={styles.footerNavTitle}>Enquiries</p>
                             <p className={styles.footerContactMeta}>General</p>
                             <a
-                                href="mailto:reservations@conferra.co"
+                                href="mailto:info@conferra.co"
                                 className={styles.footerContactValue}
                             >
-                                reservations@conferra.co
+                                info@conferra.co
                             </a>
                             <p className={styles.footerContactMeta}>Location</p>
                             <p className={styles.footerContactValue}>A12, A block, East of Kailash, New Delhi</p>
                         </address>
                     </div>
                     <div className={styles.footerBottom}>
-                        <span className={styles.footerCopy}>© 2026 CONFERRA.</span>
-                        <div className={styles.footerLegal}>
+                        <span className={styles.footerCopy}>© 2026 CONFERRA by <strong>Ramantra Group</strong></span>
+                        {/* <div className={styles.footerLegal}>
                             <Link href="#" className={styles.footerLegalLink}>
                                 Terms & Conditions
                             </Link>
@@ -404,7 +404,7 @@ export default async function HomePage() {
                             <Link href="#" className={styles.footerLegalLink}>
                                 Accessibility
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </footer>
