@@ -22,7 +22,7 @@
   position: relative;
   grid-column: span 3;
   overflow: hidden;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--surface-secondary);
   border: none;
   padding: 0;
@@ -71,6 +71,10 @@
   .grid {
     grid-auto-rows: 31rem;
   }
+
+  .tile {
+  border-radius: var(--radius-lg);
+}
 
   /* 3-up by default. */
   .tile,

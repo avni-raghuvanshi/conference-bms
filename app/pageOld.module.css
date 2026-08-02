@@ -853,16 +853,24 @@ a.footerContactValue:hover {
 @media (min-width: 768px) {
     .footerBottom {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
     }
 }
 
 .footerCopy {
     font-family: var(--font-sans);
-    font-size: 0.5625rem;
-    letter-spacing: 0.3em;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: hsl(0 0% 91% / 0.3);
+    color: hsl(0 0% 91% / 0.6);
+}
+
+.footerParent {
+    font-family: var(--font-sans);
+    font-size: 0.5625rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: hsl(0 0% 91% / 0.6);
 }
 
 .footerLegal {
@@ -875,7 +883,7 @@ a.footerContactValue:hover {
     font-size: 0.5625rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: hsl(0 0% 91% / 0.3);
+    color: hsl(0 0% 91% / 0.6);
     text-decoration: none;
     transition: color var(--transition-fast);
 }
