@@ -8,8 +8,8 @@ import Container from "@/components/ui/Container/Container";
 import Button from "../Button";
 
 const NAV_LINKS = [
-  { label: "Rooms", href: "/#spaces" },
   { label: "Facilities", href: "/#features" },
+  { label: "Gallery", href: "/#gallery" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -64,8 +64,8 @@ export default function Header() {
             </nav>
 
             <div className={styles.headerRight}>
-            <Link href="/booking" className={styles.bookButton}>
-                <Button>Book a Room</Button>
+            <Link href="/#contact" className={styles.bookButton}>
+                <Button>Contact Us</Button>
             </Link>
 
             <button
@@ -113,10 +113,10 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/booking"
+              href="/#contact"
               onClick={() => setOpen(false)}
             >
-              <Button>Book a Room</Button>
+              <Button>Contact Us</Button>
             </Link>
           </nav>
         </div>

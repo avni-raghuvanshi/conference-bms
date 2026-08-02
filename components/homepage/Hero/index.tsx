@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Container from '@/components/ui/Container/Container'
 import React from 'react';
 import styles from './hero.module.css';
@@ -8,9 +9,12 @@ const Hero = () => {
     <section className={styles.heroOuter}>
       <Container className={styles.heroContainer}>
         <div className={styles.heroInner}>
-          <h1>Premium Spaces for Critical Decisions.</h1>
-          <p>Four thoughtfully composed rooms for arbitrations, board reviews, candidate interviews, and the kind of meetings that deserve a considered backdrop. Calibrated for clarity, acoustics, and lighting — so the work happens, and the room steps out of the way.</p>
-          <Button>Reserve Your Space</Button>
+          <span className={styles.heroKicker}>East of Kailash, Delhi</span>
+          <h1>A quiet room for your next meeting.</h1>
+          <p>Space for arbitrations, board meetings, and other important discussions, with audio and video set up ready to go.</p>
+          <Link href="/#contact">
+            <Button size="lg">Get in Touch</Button>
+          </Link>
         </div>
       </Container>
     </section>

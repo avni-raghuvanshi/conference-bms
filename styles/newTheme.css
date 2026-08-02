@@ -6,18 +6,18 @@
   color-scheme: light;
 
   /* Brand */
-  --primary: #0e0e0e;
-  --primary-hover: #1e1e1e;
-  --accent: #c8c8b0;
+  --primary: #2e2319;
+  --primary-hover: #231b13;
+  --accent: #af916a;
 
   /* Backgrounds */
   --background: #fafaf8;
   --surface: #ffffff;
-  --surface-secondary: #EEF5F7;
+  --surface-secondary: #f7f1e9;
   --surface-hover: #e4e5e6;
 
   /* Text */
-  --text-primary: #0E0E0E;
+  --text-primary: #2e2319;
   --text-secondary: #525252;
   --text-muted: #737373;
   --text-inverse: #ffffff;
@@ -86,7 +86,7 @@
   --text-lg: 1.8rem;
   --text-xl: 2rem;
   --text-2xl: 2.4rem;
-  --text-3xl: 3;
+  --text-3xl: 3rem;
   --text-4xl: 3.6rem;
   --text-5xl: 4.8rem;
   --text-6xl: 6rem;

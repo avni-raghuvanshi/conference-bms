@@ -19,6 +19,15 @@
   align-items: center;
 }
 
+.heroKicker{
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 .heroInner > h1{
   font-size: var(--text-4xl);
   color: var(--text-primary);
@@ -27,7 +36,8 @@
 .heroInner > p{
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  max-width: 52ch;
 }
 
 @media(min-width: 980px){
