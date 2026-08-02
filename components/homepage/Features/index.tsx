@@ -10,7 +10,7 @@ const Features = () => {
         </h2>
 
         <div className={styles.grid}>
-          <article className={`${styles.card} ${styles.cardDark}`}>
+          <article className={`${styles.card} ${styles.cardSolid}`}>
             <h3>A space built for serious meetings</h3>
             <p>
               Suited for arbitrations, board meetings, and other important
@@ -28,7 +28,7 @@ const Features = () => {
             <p>Every room comes with audio and video conferencing set up, so calls and presentations just work.</p>
           </article>
 
-          <article className={`${styles.card} ${styles.cardSolid}`}>
+          <article className={`${styles.card} ${styles.cardDark}`}>
             <h3>
               <span className={styles.pin} aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" width="16" height="16">

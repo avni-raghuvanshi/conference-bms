@@ -7,6 +7,8 @@ import Button from '@/components/ui/Button';
 const Hero = () => {
   return (
     <section className={styles.heroOuter}>
+      <div className={`${styles.orb} ${styles.orbLarge}`} aria-hidden="true" />
+      <div className={`${styles.orb} ${styles.orbMedium}`} aria-hidden="true" />
       <Container className={styles.heroContainer}>
         <div className={styles.heroInner}>
           <span className={styles.heroKicker}>East of Kailash, Delhi</span>
