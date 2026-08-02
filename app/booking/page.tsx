@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 import BookingForm from '@/components/booking/BookingForm';
 import styles from './page.module.css';
 
@@ -14,6 +15,9 @@ export const metadata: Metadata = {
 };
 
 export default function BookingPage() {
+    // Booking flow is disabled while the site is being redone — route back home.
+    redirect('/');
+
     return (
         <div className={styles.page}>
             <header className={styles.pageHeader}>

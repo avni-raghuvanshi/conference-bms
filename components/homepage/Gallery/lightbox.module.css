@@ -1,0 +1,97 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: var(--space-6);
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog::backdrop {
+  background: hsl(0 0% 4% / 0.92);
+}
+
+.imageWrap {
+  position: relative;
+  width: min(92vw, 1100px);
+  height: min(80dvh, 720px);
+}
+
+.image {
+  object-fit: contain;
+}
+
+.closeButton,
+.navButton {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid hsl(0 0% 100% / 0.16);
+  background: hsl(0 0% 100% / 0.08);
+  color: var(--text-inverse);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base);
+}
+
+.closeButton:hover,
+.navButton:hover {
+  background: hsl(0 0% 100% / 0.16);
+  border-color: hsl(0 0% 100% / 0.3);
+}
+
+.closeButton {
+  inset-block-start: var(--space-6);
+  inset-inline-end: var(--space-6);
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.navButton {
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  width: 4.4rem;
+  height: 4.4rem;
+}
+
+.prevButton {
+  inset-inline-start: var(--space-4);
+}
+
+.nextButton {
+  inset-inline-end: var(--space-4);
+}
+
+.counter {
+  position: absolute;
+  inset-block-end: var(--space-6);
+  inset-inline: 0;
+  text-align: center;
+  color: hsl(0 0% 100% / 0.75);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+@media (max-width: 640px) {
+  .navButton {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .prevButton {
+    inset-inline-start: var(--space-2);
+  }
+
+  .nextButton {
+    inset-inline-end: var(--space-2);
+  }
+}

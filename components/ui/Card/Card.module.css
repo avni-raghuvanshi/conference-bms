@@ -33,3 +33,13 @@
     transform: translateY(-2px);
     border-color: var(--color-primary-200);
 }
+
+.elevation-sm{
+    box-shadow: var(--shadow-sm);
+}
+.elevation-md{
+    box-shadow: var(--shadow-md);
+}
+.elevation-lg{
+    box-shadow: var(--shadow-lg);
+}

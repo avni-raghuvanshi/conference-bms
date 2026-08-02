@@ -1,57 +1,54 @@
 .button {
+    all: unset;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
     font-family: var(--font-sans);
-    font-weight: var(--font-bold);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.05em;
+    text-transform: capitalize;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition:
-        background-color var(--transition-base),
-        border-color var(--transition-base),
-        color var(--transition-base),
-        transform var(--transition-fast),
-        opacity var(--transition-fast);
+    transition: all var(--transition);
     position: relative;
     text-decoration: none;
     user-select: none;
+    width: max-content;
 }
 
 /* ── Sizes ── */
 
 .sm {
     font-size: var(--text-xs);
-    padding: var(--space-2) var(--space-5);
-    height: 2.25rem;
+    padding: var(--space-2) var(--space-4);
+    /* height: 2.25rem; */
 }
 
 .md {
-    font-size: var(--text-xs);
-    padding: var(--space-3) var(--space-8);
-    height: 2.75rem;
+    font-size: var(--text-sm);
+    padding: var(--space-3) var(--space-6);
+    /* height: 2.75rem; */
 }
 
 .lg {
-    font-size: var(--text-sm);
-    padding: var(--space-5) var(--space-10);
-    height: 3.5rem;
+    font-size: var(--text-base);
+    padding: var(--space-6) var(--space-8);
+    /* height: 3.5rem; */
 }
 
 /* ── Variants ── */
 
 .primary {
-    background: var(--color-primary);
-    color: var(--color-on-primary);
+    background: var(--text-primary);
+    color: var(--text-inverse);
     box-shadow: var(--shadow-md);
 }
 
 .primary:hover:not(:disabled) {
-    background: var(--color-primary-fixed-dim);
-    transform: translateY(-1px);
+    background: var(--primary-hover);
+    transform: scaleX(1.1);
 }
 
 .primary:active:not(:disabled) {
@@ -60,14 +57,14 @@
 
 .secondary {
     background: transparent;
-    color: var(--color-on-surface);
-    border: 1px solid hsl(0 0% 100% / 0.2);
+    color: var(--text-primary);
+    border: 1px solid var(--text-primary);
 }
 
 .secondary:hover:not(:disabled) {
     background: hsl(0 0% 100% / 0.05);
     border-color: hsl(0 0% 100% / 0.35);
-    transform: translateY(-1px);
+    transform: scaleX(1.1);
 }
 
 .secondary:active:not(:disabled) {
@@ -76,12 +73,12 @@
 
 .ghost {
     background: transparent;
-    color: var(--color-primary);
+    color: var(--text-primary);
     border: none;
 }
 
 .ghost:hover:not(:disabled) {
-    color: var(--color-primary-fixed);
+    color: var(--text-muted);
 }
 
 .danger {

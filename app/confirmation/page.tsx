@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/db';
 import styles from './page.module.css';
 
@@ -184,6 +185,9 @@ function ErrorState({ message }: { message: string }) {
 }
 
 export default function ConfirmationPage({ searchParams }: ConfirmationPageProps) {
+    // Booking flow is disabled while the site is being redone — route back home.
+    redirect('/');
+
     return (
         <div className={styles.page}>
             <Suspense fallback={

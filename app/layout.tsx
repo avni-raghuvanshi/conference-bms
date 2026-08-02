@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Noto_Serif, Montserrat } from 'next/font/google';
-import '../styles/globals.css';
+import '../styles/newGlobal.css';
 import Header from '@/components/ui/Header/Header';
 
 const notoSerif = Noto_Serif({
@@ -20,7 +20,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
     title: {
-        default: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
+        default: 'Conferra — Meeting Rooms in East of Kailash, Delhi',
         template: '%s | Conferra',
     },
     description:
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         type: 'website',
         locale: 'en_IN',
         siteName: 'Conferra',
-        title: 'Conferra — Meeting Rooms in Greater Kailash, Delhi',
+        title: 'Conferra — Meeting Rooms in East of Kailash, Delhi',
         description:
             'Private meeting rooms in East of Kailash, Delhi. Audio/video conferencing included. Book by the hour.',
     },
@@ -41,7 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en" className={`${notoSerif.variable} ${montserrat.variable}`}>
             <body>
                 <Header />
-                {children}
+                <main style={{paddingTop: "var(--header-height)"}}>
+                    {children}
+                </main>
             </body>
         </html>
     );

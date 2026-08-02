@@ -1,0 +1,79 @@
+.outer {
+  padding-block: var(--space-4) var(--space-24);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  border-radius: var(--radius-xl);
+  background: var(--primary);
+  color: var(--text-inverse);
+  padding: var(--space-10) var(--space-8);
+}
+
+.copy h2 {
+  font-size: var(--text-2xl);
+  color: inherit;
+}
+
+.copy p {
+  color: hsl(0 0% 100% / 0.75);
+  font-size: var(--text-sm);
+  margin-block-start: var(--space-2);
+  max-width: 46ch;
+}
+
+.copy .address {
+  color: var(--accent);
+  font-weight: var(--font-semibold);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-inverse);
+  background: hsl(0 0% 100% / 0.08);
+  border: 1px solid hsl(0 0% 100% / 0.16);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  text-decoration: none;
+  transition: background var(--transition-base), border-color var(--transition-base);
+}
+
+.actionButton:hover {
+  background: hsl(0 0% 100% / 0.14);
+  border-color: hsl(0 0% 100% / 0.3);
+  text-decoration: none;
+}
+
+.whatsapp svg {
+  color: #6bcf6b;
+}
+
+.email svg {
+  color: var(--accent);
+}
+
+@media (min-width: 768px) {
+  .panel {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-12);
+  }
+
+  .actions {
+    flex-direction: row;
+  }
+}
